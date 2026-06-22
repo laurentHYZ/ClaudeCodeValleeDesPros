@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" width="1000" height="300">
+<rect width="1000" height="300" fill="#FFFFFF"/>
+<path d="M120 90 C 175 145, 162 208, 120 208 C 78 208, 65 145, 120 90 Z" fill="#1B5E8C"/>
+    <path d="M94 152 l18 20 l36 -42" fill="none" stroke="#7FD1D6" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="250" y="148" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="68" font-weight="700" fill="#1B5E8C">NetPro</text><text x="250" y="210" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="46" font-weight="400" fill="#3FA66A">Services</text>
+<text x="252" y="252" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="20" letter-spacing="3" font-weight="600" fill="#7FD1D6">LA PROPRETÉ QUI SE PROUVE</text>
+</svg>

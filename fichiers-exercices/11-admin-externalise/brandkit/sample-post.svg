@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1350" width="1080" height="1350">
+<rect width="1080" height="1350" fill="#1F6F78"/>
+<rect x="0" y="0" width="18" height="1350" fill="#FF8C66"/>
+<rect x="90" y="150" width="120" height="14" rx="7" fill="#FF8C66"/>
+<text x="90" y="459" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="83" font-weight="800" fill="#FFFFFF">5 h par semaine</text><text x="90" y="553" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="83" font-weight="800" fill="#FFFFFF">récupérées.</text>
+<rect x="90" y="1090" width="640" height="92" rx="46" fill="#FF8C66"/>
+<text x="410" y="1149" text-anchor="middle" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="34" font-weight="700" fill="#1F6F78">Déléguez votre administratif</text>
+<text x="200" y="1248" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="46" font-weight="700" fill="#FFFFFF">Admin Solutia</text>
+</svg>

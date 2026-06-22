@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1350" width="1080" height="1350">
+<rect width="1080" height="1350" fill="#152238"/>
+<rect x="0" y="0" width="18" height="1350" fill="#FFC93C"/>
+<rect x="90" y="150" width="120" height="14" rx="7" fill="#FFC93C"/>
+<text x="90" y="386" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="120" font-weight="800" fill="#FBF7F0">Du contenu</text><text x="90" y="522" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="120" font-weight="800" fill="#FBF7F0">qui prouve</text><text x="90" y="658" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="120" font-weight="800" fill="#FBF7F0">son ROI.</text>
+<rect x="90" y="1090" width="640" height="92" rx="46" fill="#FFC93C"/>
+<text x="410" y="1149" text-anchor="middle" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="34" font-weight="700" fill="#152238">Parlons de votre campagne</text>
+<text x="200" y="1248" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="46" font-weight="700" fill="#FFFFFF">Méridien</text>
+</svg>

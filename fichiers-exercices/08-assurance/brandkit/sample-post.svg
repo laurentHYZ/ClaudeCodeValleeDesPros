@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1350" width="1080" height="1350">
+<rect width="1080" height="1350" fill="#0E6BA8"/>
+<rect x="0" y="0" width="18" height="1350" fill="#E0C088"/>
+<rect x="90" y="150" width="120" height="14" rx="7" fill="#E0C088"/>
+<text x="90" y="460" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="78" font-weight="800" fill="#FFFFFF">Dégât des eaux ?</text><text x="90" y="548" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="78" font-weight="800" fill="#FFFFFF">Les 3 réflexes.</text>
+<rect x="90" y="1090" width="640" height="92" rx="46" fill="#E0C088"/>
+<text x="410" y="1149" text-anchor="middle" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="34" font-weight="700" fill="#0E6BA8">Contactez votre courtier</text>
+<text x="200" y="1248" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="46" font-weight="700" fill="#FFFFFF">Méditerranée Courtage</text>
+</svg>

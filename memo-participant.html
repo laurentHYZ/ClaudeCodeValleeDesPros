@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Claude Code — Mémo participant</title>
+<style>
+  @page { size: A4; margin: 12mm; }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:Georgia,serif; color:#1f1e1c; font-size:9.5pt; line-height:1.45; max-width:186mm; margin:0 auto; padding:8mm 0;}
+  h1{font-size:16pt; margin-bottom:2mm;}
+  .sub{color:#6b675f; font-size:9pt; margin-bottom:5mm;}
+  h2{font-family:-apple-system,'Segoe UI',sans-serif; font-size:8.5pt; letter-spacing:.08em; text-transform:uppercase; color:#c2410c; border-bottom:1px solid #e6e2da; padding-bottom:1mm; margin:4mm 0 2mm;}
+  .cols{display:flex; gap:6mm;}
+  .col{flex:1;}
+  .regle{margin-bottom:2.2mm;}
+  .regle b{display:block;}
+  .regle .ex{font-family:Consolas,monospace; font-size:8pt; background:#f4f2ec; border:1px solid #e6e2da; border-radius:3px; padding:1mm 2mm; display:block; margin-top:0.8mm;}
+  ol.prompts{margin-left:5mm;}
+  ol.prompts li{margin-bottom:1.6mm; font-family:Consolas,monospace; font-size:8pt; background:#f4f2ec; border:1px solid #e6e2da; border-radius:3px; padding:1mm 2mm; list-style-position:inside;}
+  ul.rappels{margin-left:5mm;}
+  ul.rappels li{margin-bottom:1mm;}
+  .footer{margin-top:4mm; padding-top:2mm; border-top:1px solid #e6e2da; color:#6b675f; font-size:8pt;}
+  @media print { body{padding:0;} }
+</style>
+</head>
+<body>
+
+<h1>Claude Code — le mémo</h1>
+<p class="sub">Un agent qui travaille sur un dossier de fichiers : il lit, crée, organise, calcule — et vous validez chaque modification.</p>
+
+<h2>Les cinq règles d'une bonne demande</h2>
+<div class="cols">
+  <div class="col">
+    <div class="regle"><b>1 · Décrivez le résultat, pas les étapes</b>
+      <span class="ex">Produis une synthèse d'une page lisible en 2 minutes par un client non technique.</span></div>
+    <div class="regle"><b>2 · Donnez-lui le document</b> (glissez-le, ou tapez @)
+      <span class="ex">Pourquoi ce total ne correspond pas ? @facture.pdf @devis-signe.pdf</span></div>
+    <div class="regle"><b>3 · Demandez la vérification dans la même phrase</b>
+      <span class="ex">…puis vérifie chaque total par rapport au PDF source et signale tes doutes.</span></div>
+  </div>
+  <div class="col">
+    <div class="regle"><b>4 · Fixez un objectif mesurable</b>
+      <span class="ex">Titre &lt; 10 mots, corps &lt; 120 mots, même format pour les 12 fiches.</span></div>
+    <div class="regle"><b>5 · Précisez la forme de la réponse</b>
+      <span class="ex">…en tableau Excel, puis en 3 points que je peux envoyer par SMS.</span></div>
+  </div>
+</div>
+
+<h2>Onze demandes à copier-adapter</h2>
+<ol class="prompts">
+  <li>Parcours ce dossier et dis-moi ce qu'il contient, ce qui est désorganisé ou incohérent.</li>
+  <li>Range ces fichiers en sous-dossiers logiques, renomme-les AAAA-MM-JJ-description. Montre ton plan avant de bouger quoi que ce soit.</li>
+  <li>Lis les PDF de ce dossier et construis un tableau comparatif : une ligne par document, signale tout ce qui est inhabituel.</li>
+  <li>Voici les impayés @export.csv : rédige une relance par client, ton gradué selon le retard.</li>
+  <li>Résume ce rapport en une page pour mon associé, puis en 3 points pour un SMS client.</li>
+  <li>Croise ces deux fichiers et liste chaque écart avec sa source.</li>
+  <li>Crée un CLAUDE.md avec mes instructions permanentes : ton, nommage, mentions obligatoires, ce qu'il ne faut jamais toucher. Pose-moi des questions.</li>
+  <li>Transforme la tâche qu'on vient de faire en compétence réutilisable /nom-de-la-tache.</li>
+  <li>Tous les lundis 8h, résume les fichiers ajoutés cette semaine et liste les échéances mentionnées.</li>
+  <li>Je veux un [calculateur / formulaire / tableau de bord] en une page HTML. Interroge-moi d'abord, question par question, puis construis après mon accord.</li>
+  <li>Crée un agent [controle-pointages / veille-avis / prep-arrivees…] qui fait cette tâche seul chaque semaine : lis les fichiers concernés, produis le rapport habituel dans rapports/, arrête-toi si une donnée est manquante ou incohérente.</li>
+</ol>
+
+<h2>Les réflexes</h2>
+<div class="cols">
+  <div class="col">
+    <ul class="rappels">
+      <li><b>Mode Demander</b> (par défaut) : rien ne change sans votre accord. <b>Mode Plan</b> pour les gros travaux : il propose, ne touche rien.</li>
+      <li>Vous pouvez <b>interrompre et corriger</b> en pleine tâche : tapez, Entrée.</li>
+      <li>Travaillez sur des <b>copies</b> tant qu'un workflow n'a pas fait ses preuves.</li>
+    </ul>
+  </div>
+  <div class="col">
+    <ul class="rappels">
+      <li><b>Vérifiez</b> chiffres, dates et clauses : c'est un assistant junior brillant — le professionnel responsable, c'est vous.</li>
+      <li>Documents clients : mention <i>« préparé avec l'aide d'une IA, relu et validé par [vous] »</i>.</li>
+      <li>Chez vous : ouvrez le dossier d'exercices et tapez <b>/demarrer</b> — Claude rejoue la formation avec vous.</li>
+      <li><b>Agents (session 3)</b> : un fichier <code>.claude/agents/nom.md</code> transforme une tâche récurrente en routine autonome — Claude l'exécute seul, vous recevez le résultat.</li>
+      <li>Compétences trouvées en ligne : <b>lisez le SKILL.md avant d'installer</b> ; essai en dossier jetable ; données clients = sources vérifiées (dépôt officiel, Plugins de l'app).</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Commandes utiles</h2>
+<ul class="rappels">
+  <li><b>/clear</b> — repart à zéro : Claude oublie la conversation précédente. À utiliser dès que vous changez de sujet ou que ça part dans la mauvaise direction.</li>
+  <li><b>/compact</b> — résume une longue conversation pour continuer sans tout recommencer.</li>
+  <li><b>/model</b> — change de modèle : plus rapide/économique pour une petite tâche, plus capable pour une tâche complexe.</li>
+  <li><b>/help</b> — affiche la liste de toutes les commandes disponibles.</li>
+</ul>
+
+<p class="footer">Après chaque tâche : qu'ai-je oublié de préciser ? comment je vérifie ? est-ce que j'en fais une /compétence ? — Formation Claude Code · La Vallée des Pros</p>
+
+</body>
+</html>

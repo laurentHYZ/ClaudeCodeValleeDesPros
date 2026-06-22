@@ -1,0 +1,3 @@
+RIB — SARL Riviera Décor (fictif)
+IBAN : FR76 0000 0000 0000 0000 0000 000 (fictif)
+BIC : XXXXFRPP

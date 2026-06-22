@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" width="1000" height="300">
+<rect width="1000" height="300" fill="#FFFFFF"/>
+<rect x="78" y="94" width="84" height="112" rx="8" fill="#4A3F9E"/>
+    <line x1="94" y1="118" x2="146" y2="118" stroke="#36C275" stroke-width="6" stroke-linecap="round"/>
+    <line x1="94" y1="136" x2="130" y2="136" stroke="#36C275" stroke-width="6" stroke-linecap="round"/>
+    <path d="M98 168 l14 14 l30 -34" fill="none" stroke="#36C275" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="250" y="148" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="68" font-weight="700" fill="#4A3F9E">Paie</text><text x="250" y="210" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="46" font-weight="400" fill="#3D9BE9">Sud</text>
+<text x="252" y="252" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="20" letter-spacing="3" font-weight="600" fill="#36C275">LA PAIE JUSTE, À L&#x27;HEURE</text>
+</svg>

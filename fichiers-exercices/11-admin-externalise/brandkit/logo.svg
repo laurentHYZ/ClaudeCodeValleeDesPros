@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" width="1000" height="300">
+<rect width="1000" height="300" fill="#FFFFFF"/>
+<path d="M68 116 h28 l10 12 h66 v62 a6 6 0 0 1 -6 6 h-92 a6 6 0 0 1 -6 -6 Z" fill="#1F6F78"/>
+    <path d="M98 162 l16 16 l34 -38" fill="none" stroke="#FF8C66" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="250" y="148" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="68" font-weight="700" fill="#1F6F78">Admin</text><text x="250" y="210" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="46" font-weight="400" fill="#43C59E">Solutia</text>
+<text x="252" y="252" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="20" letter-spacing="3" font-weight="600" fill="#FF8C66">ENTRE DE BONNES MAINS</text>
+</svg>

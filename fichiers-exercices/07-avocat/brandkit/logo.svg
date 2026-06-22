@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" width="1000" height="300">
+<rect width="1000" height="300" fill="#FFFFFF"/>
+<rect x="74" y="96" width="92" height="14" rx="3" fill="#6E1F2A"/>
+    <rect x="74" y="192" width="92" height="16" rx="3" fill="#6E1F2A"/>
+    <rect x="90" y="110" width="14" height="82" fill="#A8852C"/>
+    <rect x="118" y="110" width="14" height="82" fill="#A8852C"/>
+    <rect x="146" y="110" width="0" height="82" fill="#A8852C"/>
+<text x="250" y="148" font-family="Georgia, 'Times New Roman', serif" font-size="68" font-weight="700" fill="#6E1F2A">Vernet</text><text x="250" y="210" font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="400" fill="#A8852C">&amp; Associés</text>
+<text x="252" y="252" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="20" letter-spacing="3" font-weight="600" fill="#A8852C">LA RIGUEUR AU SERVICE DE VOS AFFAIRES</text>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" width="1000" height="300">
+<rect width="1000" height="300" fill="#FFFFFF"/>
+<circle cx="120" cy="150" r="58" fill="none" stroke="#152238" stroke-width="10"/>
+    <line x1="62" y1="150" x2="178" y2="150" stroke="#152238" stroke-width="8"/>
+    <circle cx="140" cy="150" r="13" fill="#FFC93C"/>
+<text x="250" y="148" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="68" font-weight="700" fill="#152238">Méridien</text>
+<text x="252" y="252" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="20" letter-spacing="3" font-weight="600" fill="#FFC93C">DU CONTENU QUI COMPTE</text>
+</svg>

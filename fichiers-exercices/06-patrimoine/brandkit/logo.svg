@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" width="1000" height="300">
+<rect width="1000" height="300" fill="#FFFFFF"/>
+<path d="M62 200 L102 140 L126 168 L178 98" fill="none" stroke="#1A2A4F" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M150 98 L178 98 L178 126" fill="none" stroke="#B8943F" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="250" y="148" font-family="Georgia, 'Times New Roman', serif" font-size="68" font-weight="700" fill="#1A2A4F">Altius</text><text x="250" y="210" font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="400" fill="#B8943F">Patrimoine</text>
+<text x="252" y="252" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="20" letter-spacing="3" font-weight="600" fill="#B8943F">VOIR PLUS HAUT, PLUS LOIN</text>
+</svg>

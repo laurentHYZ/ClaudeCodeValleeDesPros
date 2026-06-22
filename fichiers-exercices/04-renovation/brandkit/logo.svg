@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" width="1000" height="300">
+<rect width="1000" height="300" fill="#FFFFFF"/>
+<path d="M62 160 L120 100 L178 160" fill="none" stroke="#22506B" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="86" y="168" width="68" height="40" rx="6" fill="#E8772E"/>
+<text x="250" y="148" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="68" font-weight="700" fill="#22506B">Belin</text><text x="250" y="210" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="46" font-weight="400" fill="#E8772E">Rénov&#x27;</text>
+<text x="252" y="252" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="20" letter-spacing="3" font-weight="600" fill="#E8772E">RÉNOVÉ DANS LES RÈGLES</text>
+</svg>

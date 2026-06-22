@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1350" width="1080" height="1350">
+<rect width="1080" height="1350" fill="#3B3B98"/>
+<rect x="0" y="0" width="18" height="1350" fill="#F5B301"/>
+<rect x="90" y="150" width="120" height="14" rx="7" fill="#F5B301"/>
+<text x="90" y="456" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="104" font-weight="800" fill="#FFFFFF">De 3,9 à 4,3</text><text x="90" y="574" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="104" font-weight="800" fill="#FFFFFF">en 3 mois.</text>
+<rect x="90" y="1090" width="640" height="92" rx="46" fill="#F5B301"/>
+<text x="410" y="1149" text-anchor="middle" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="34" font-weight="700" fill="#3B3B98">Reprenez la main sur vos avis</text>
+<text x="200" y="1248" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="46" font-weight="700" fill="#FFFFFF">Nota Score</text>
+</svg>

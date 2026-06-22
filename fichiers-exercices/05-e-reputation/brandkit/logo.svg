@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" width="1000" height="300">
+<rect width="1000" height="300" fill="#FFFFFF"/>
+<polygon points="120,94 133,132 174,135 142,161 152,202 120,180 88,202 98,161 66,135 107,132" fill="#F5B301"/>
+    <path d="M74 210 L110 188 L132 200 L172 168" fill="none" stroke="#3B3B98" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="250" y="148" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="68" font-weight="700" fill="#3B3B98">Nota</text><text x="250" y="210" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="46" font-weight="400" fill="#2ECC71">Score</text>
+<text x="252" y="252" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="20" letter-spacing="3" font-weight="600" fill="#F5B301">VOTRE RÉPUTATION, SOUS CONTRÔLE</text>
+</svg>

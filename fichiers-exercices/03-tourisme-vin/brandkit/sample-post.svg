@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1350" width="1080" height="1350">
+<rect width="1080" height="1350" fill="#C0613B"/>
+<rect x="0" y="0" width="18" height="1350" fill="#E3A857"/>
+<rect x="90" y="150" width="120" height="14" rx="7" fill="#E3A857"/>
+<text x="90" y="391" font-family="Georgia, 'Times New Roman', serif" font-size="114" font-weight="800" fill="#F4EBDD">Le Luberon,</text><text x="90" y="520" font-family="Georgia, 'Times New Roman', serif" font-size="114" font-weight="800" fill="#F4EBDD">en toute</text><text x="90" y="649" font-family="Georgia, 'Times New Roman', serif" font-size="114" font-weight="800" fill="#F4EBDD">saison.</text>
+<rect x="90" y="1090" width="640" height="92" rx="46" fill="#E3A857"/>
+<text x="410" y="1149" text-anchor="middle" font-family="Montserrat, 'Segoe UI', Arial, sans-serif" font-size="34" font-weight="700" fill="#C0613B">Réservez votre séjour</text>
+<text x="200" y="1248" font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="700" fill="#FFFFFF">Les Restanques &amp; La Lézardière</text>
+</svg>

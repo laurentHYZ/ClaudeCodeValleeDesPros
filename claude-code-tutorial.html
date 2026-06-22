@@ -1,0 +1,1516 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+<script>
+  // Applique le thème avant le rendu pour éviter tout clignotement. Défaut : Minuit.
+  (function(){
+    var t; try{ t = localStorage.getItem('tutoTheme'); }catch(e){}
+    var ok = { midnight:1, ocean:1 };
+    document.documentElement.setAttribute('data-theme', ok[t] ? t : 'midnight');
+  })();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code pour dirigeants de PME — Tutoriel autonome</title>
+<style>
+  :root{
+    --bg:#faf9f6; --card:#ffffff; --ink:#1f1e1c; --muted:#6b675f;
+    --accent:#c2410c; --accent-soft:#fff1e8; --accent-border:#f3c9ad;
+    --border:#e6e2da; --border-hover:#d8d2c6;
+    --good:#15803d; --good-soft:#ecfdf3; --tip-border:#bbe5c8;
+    --warn:#b45309; --warn-soft:#fffbeb; --warn-border:#f5dfa8;
+    --bad:#dc7066; --bad-soft:#fdf0ee;
+    --code-bg:#f4f2ec; --nav-bg:rgba(250,249,246,.95);
+  }
+  /* ---- Thèmes (2, sombres) ---- */
+  html[data-theme="midnight"]{                          /* Minuit — indigo (défaut) */
+    --bg:#0f1424; --card:#171d33; --ink:#e7ecf7; --muted:#9aa4bf;
+    --accent:#7aa2ff; --accent-soft:#1c2440; --accent-border:#34406b;
+    --border:#283150; --border-hover:#39446a;
+    --good:#5bbd7e; --good-soft:#152a20; --tip-border:#274a37;
+    --warn:#e0a13a; --warn-soft:#2a2415; --warn-border:#4a3f22;
+    --bad:#e08a80; --bad-soft:#2e1c1a;
+    --code-bg:#141a2e; --nav-bg:rgba(15,20,36,.95);
+  }
+  html[data-theme="ocean"]{                             /* Océan — bleu / turquoise */
+    --bg:#0a1f2c; --card:#0f2c3d; --ink:#e3f1f7; --muted:#8fb3c4;
+    --accent:#38bdf8; --accent-soft:#0e2f44; --accent-border:#1d4f6b;
+    --border:#163a4e; --border-hover:#235066;
+    --good:#4fcf9a; --good-soft:#0d2b2a; --tip-border:#1f4f44;
+    --warn:#e6b450; --warn-soft:#26271a; --warn-border:#45401f;
+    --bad:#e8938a; --bad-soft:#2e1c1a;
+    --code-bg:#0c2636; --nav-bg:rgba(10,31,44,.95);
+  }
+  html{color-scheme:dark;}
+  html[data-theme="midnight"], html[data-theme="ocean"]{color-scheme:dark;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif; background:var(--bg); color:var(--ink); line-height:1.65;}
+  .sans{font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}
+
+  header.hero{max-width:880px; margin:0 auto; padding:56px 24px 24px;}
+  header.hero h1{font-size:2.1rem; line-height:1.2; margin-bottom:12px;}
+  header.hero p.sub{color:var(--muted); font-size:1.05rem; max-width:660px;}
+  .pill{display:inline-block; font-family:-apple-system,'Segoe UI',sans-serif; font-size:.75rem; letter-spacing:.06em; text-transform:uppercase; background:var(--accent-soft); color:var(--accent); border:1px solid var(--accent-border); border-radius:999px; padding:3px 12px; margin-bottom:16px;}
+
+  nav#toc{position:sticky; top:0; z-index:50; background:var(--nav-bg); backdrop-filter:blur(6px); border-bottom:1px solid var(--border);}
+  nav#toc .inner{max-width:880px; margin:0 auto; padding:10px 24px; display:flex; gap:6px; overflow-x:auto; align-items:center;}
+  nav#toc a{font-family:-apple-system,'Segoe UI',sans-serif; font-size:.8rem; color:var(--muted); text-decoration:none; padding:5px 10px; border-radius:6px; white-space:nowrap;}
+  nav#toc a:hover{background:var(--accent-soft); color:var(--accent);}
+  #progressLabel{margin-left:auto; font-family:-apple-system,'Segoe UI',sans-serif; font-size:.75rem; color:var(--muted); white-space:nowrap;}
+  #progressBar{height:3px; background:var(--accent); width:0%; transition:width .3s;}
+  .s2-progress{display:inline-block; font-size:.75rem; color:var(--muted); margin:2px 0 14px;}
+  .s2-badge{display:inline-block; font-family:-apple-system,'Segoe UI',sans-serif; font-size:.7rem; letter-spacing:.06em; text-transform:uppercase; background:var(--warn-soft); color:var(--warn); border:1px solid var(--warn-border); border-radius:999px; padding:2px 10px; margin-left:8px; vertical-align:middle;}
+
+  main{max-width:880px; margin:0 auto; padding:8px 24px 80px;}
+  section.lesson{background:var(--card); border:1px solid var(--border); border-radius:12px; padding:32px 36px; margin:28px 0; scroll-margin-top:70px;}
+  section.lesson h2{font-size:1.45rem; margin-bottom:4px;}
+  .lessonNum{font-family:-apple-system,'Segoe UI',sans-serif; font-size:.78rem; color:var(--accent); letter-spacing:.08em; text-transform:uppercase;}
+  section.lesson h3{font-size:1.05rem; margin:22px 0 8px;}
+  section.lesson p{margin:10px 0;}
+  section.lesson ul,section.lesson ol{margin:10px 0 10px 24px;}
+  section.lesson li{margin:6px 0;}
+
+  .callout{border-radius:8px; padding:14px 18px; margin:16px 0; font-size:.95rem;}
+  .callout.tip{background:var(--good-soft); border:1px solid var(--tip-border);}
+  .callout.warn{background:var(--warn-soft); border:1px solid var(--warn-border);}
+  .callout strong{font-family:-apple-system,'Segoe UI',sans-serif; font-size:.8rem; letter-spacing:.05em; text-transform:uppercase; display:block; margin-bottom:4px;}
+  .callout.tip strong{color:var(--good);} .callout.warn strong{color:var(--warn);}
+
+  .prompt{position:relative; background:var(--code-bg); border:1px solid var(--border); border-radius:8px; padding:14px 96px 14px 16px; margin:12px 0; font-family:'SF Mono',Consolas,Menlo,monospace; font-size:.86rem; line-height:1.5; white-space:pre-wrap;}
+  .prompt button.copy{position:absolute; top:10px; right:10px; font-family:-apple-system,'Segoe UI',sans-serif; font-size:.72rem; background:var(--card); border:1px solid var(--border); border-radius:6px; padding:4px 10px; cursor:pointer; color:var(--muted);}
+  .prompt button.copy:hover{border-color:var(--accent); color:var(--accent);}
+
+  .check{display:flex; gap:10px; align-items:flex-start; padding:9px 12px; border:1px solid var(--border); border-radius:8px; margin:8px 0; cursor:pointer; background:var(--card);}
+  .check:hover{border-color:var(--border-hover);}
+  .check input{margin-top:5px; accent-color:var(--accent); cursor:pointer;}
+  .check.done{background:var(--good-soft); border-color:var(--tip-border);}
+  .check .lbl{flex:1;}
+
+  details.exercise{border:1px solid var(--border); border-radius:8px; margin:10px 0; background:var(--card);}
+  details.exercise summary{cursor:pointer; padding:12px 16px; font-family:-apple-system,'Segoe UI',sans-serif; font-size:.92rem; font-weight:600; list-style:none; display:flex; align-items:center; gap:8px;}
+  details.exercise summary::before{content:'▸'; color:var(--accent); transition:transform .15s;}
+  details.exercise[open] summary::before{transform:rotate(90deg);}
+  details.exercise .body{padding:0 16px 16px;}
+  details.exercise .body p{font-size:.93rem;}
+
+  table{width:100%; border-collapse:collapse; margin:14px 0; font-size:.92rem;}
+  th,td{border:1px solid var(--border); padding:9px 12px; text-align:left; vertical-align:top;}
+  th{font-family:-apple-system,'Segoe UI',sans-serif; font-size:.78rem; letter-spacing:.04em; text-transform:uppercase; background:var(--code-bg); color:var(--muted);}
+
+  .tabs{display:flex; gap:6px; flex-wrap:wrap; margin:16px 0 0;}
+  .tabs button{font-family:-apple-system,'Segoe UI',sans-serif; font-size:.82rem; padding:7px 13px; border:1px solid var(--border); background:var(--card); border-radius:8px; cursor:pointer; color:var(--muted);}
+  .tabs button.active{background:var(--accent-soft); color:var(--accent); border-color:var(--accent-border); font-weight:600;}
+  .tabpanel{display:none; border:1px solid var(--border); border-radius:8px; padding:18px 20px; background:var(--card); margin-top:10px;}
+  .tabpanel.active{display:block;}
+  .tabpanel p.context{font-size:.9rem; color:var(--muted); margin-top:0;}
+
+  .quiz{border:1px solid var(--border); border-radius:8px; padding:16px 18px; margin:14px 0; background:var(--card);}
+  .quiz p.q{font-weight:bold; margin-top:0;}
+  .quiz button.opt{display:block; width:100%; text-align:left; font-family:Georgia,serif; font-size:.95rem; padding:9px 12px; margin:6px 0; border:1px solid var(--border); border-radius:8px; background:var(--bg); cursor:pointer;}
+  .quiz button.opt:hover{border-color:var(--accent);}
+  .quiz button.opt.right{background:var(--good-soft); border-color:var(--good);}
+  .quiz button.opt.wrong{background:var(--bad-soft); border-color:var(--bad);}
+  .quiz .explain{display:none; font-size:.9rem; color:var(--muted); margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);}
+
+  footer{max-width:880px; margin:0 auto; padding:0 24px 60px; color:var(--muted); font-size:.88rem;}
+  kbd{font-family:'SF Mono',Consolas,monospace; font-size:.82em; background:var(--code-bg); border:1px solid var(--border); border-bottom-width:2px; border-radius:4px; padding:1px 6px;}
+
+  /* Lecture à voix haute (TTS) */
+  .tts-host{position:relative;}
+  .tts-btn{position:absolute; left:-1.7em; top:.1em; width:1.45em; height:1.45em; display:flex; align-items:center; justify-content:center; padding:0; font-size:.8rem; line-height:1; border:1px solid var(--border); border-radius:6px; background:var(--card); color:var(--muted); cursor:pointer; opacity:0; transition:opacity .15s, border-color .15s, color .15s;}
+  .tts-host:hover > .tts-btn{opacity:.55;}
+  .tts-btn:hover{opacity:1; border-color:var(--accent); color:var(--accent);}
+  .tts-btn.speaking{opacity:1; border-color:var(--accent); color:var(--accent); background:var(--accent-soft);}
+  .tts-reading{background:var(--accent-soft); border-radius:4px; box-shadow:0 0 0 5px var(--accent-soft);}
+  @media (max-width:760px){ .tts-btn{position:static; opacity:.6; margin-right:6px; vertical-align:middle;} .tts-host:hover > .tts-btn{opacity:.6;} }
+
+  /* Bascule jour / nuit */
+  #themeToggle{margin-left:10px; flex:0 0 auto; font-family:-apple-system,'Segoe UI',sans-serif; font-size:.78rem; display:inline-flex; align-items:center; gap:6px; background:var(--card); color:var(--muted); border:1px solid var(--border); border-radius:999px; padding:4px 11px; cursor:pointer; white-space:nowrap; transition:border-color .15s, color .15s;}
+  #themeToggle:hover{border-color:var(--accent); color:var(--accent);}
+  #themeToggle .ico{font-size:.95rem; line-height:1;}
+  body{transition:background .2s, color .2s;}
+  /* Navigation par session */
+  .nav-session-label{font-family:-apple-system,'Segoe UI',sans-serif; font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); font-weight:700; padding:5px 4px 5px 8px; white-space:nowrap; flex-shrink:0; opacity:.85;}
+  .nav-divider{display:inline-block; width:1px; height:16px; background:var(--border); flex-shrink:0; margin:0 6px; border-radius:1px; align-self:center;}
+  /* Minuteur de section (animateur) */
+  .lesson-timer{display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin:8px 0 20px; padding:8px 12px; background:var(--accent-soft); border:1px solid var(--accent-border); border-radius:10px; font-family:-apple-system,'Segoe UI',sans-serif;}
+  .lt-suggest{font-size:.8rem; color:var(--accent); letter-spacing:.02em;}
+  .lt-display{font-variant-numeric:tabular-nums; font-feature-settings:'tnum'; font-weight:700; font-size:1.1rem; color:var(--ink); min-width:70px; text-align:center; padding:3px 10px; background:var(--card); border:1px solid var(--border); border-radius:6px;}
+  .lt-display.overtime{color:#fff; background:var(--bad); border-color:var(--bad); animation:ltblink 1s steps(2,start) infinite;}
+  @keyframes ltblink{50%{opacity:.4;}}
+  .lt-btn{font-family:inherit; font-size:.8rem; cursor:pointer; border:1px solid var(--border); background:var(--card); color:var(--ink); border-radius:6px; padding:4px 12px;}
+  .lt-btn:hover{border-color:var(--accent); color:var(--accent);}
+  .lt-start.running{border-color:var(--accent); color:var(--accent); background:var(--accent-soft); font-weight:600;}
+  @media print{.lesson-timer{display:none;}}
+  /* Section active : halo vert pendant le décompte */
+  section.lesson{transition:box-shadow .25s ease, border-color .25s ease;}
+  section.lesson.timing{border-color:var(--good); animation:lessonGlow 2.4s ease-in-out infinite; --accent:var(--good); --warn:var(--good);}
+  @keyframes lessonGlow{0%,100%{box-shadow:0 0 0 2px var(--good), 0 0 18px rgba(34,170,90,.30);} 50%{box-shadow:0 0 0 2px var(--good), 0 0 34px rgba(34,170,90,.48);}}
+  /* Minuteur de la section active : flotte et reste visible au défilement */
+  section.lesson.timing .lesson-timer{position:fixed; top:72px; right:18px; z-index:200; margin:0; max-width:calc(100vw - 36px); border-color:var(--good); background:var(--good-soft); box-shadow:0 8px 26px rgba(0,0,0,.20);}
+  @media (max-width:640px){ section.lesson.timing .lesson-timer{top:auto; bottom:16px; right:50%; transform:translateX(50%);} }
+
+  /* Tableau (chalkboard) — touche B */
+  #chalkboard{position:fixed; inset:0; z-index:9998; display:none; background:radial-gradient(120% 120% at 50% 28%, #1b4533 0%, #0e2519 100%);}
+  #chalkboard.open{display:block;}
+  #chalkboard canvas{position:absolute; inset:0; width:100%; height:100%; cursor:crosshair; touch-action:none;}
+  #cb-tools{position:fixed; z-index:9999; left:0; right:0; bottom:0; display:flex; gap:6px; align-items:center; flex-wrap:wrap; justify-content:center; padding:5px 12px; background:rgba(18,18,16,.9); border-top:1px solid rgba(255,255,255,.16); font-family:-apple-system,'Segoe UI',sans-serif; -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); box-shadow:0 -4px 18px rgba(0,0,0,.35);}
+  #cb-tools .cb-color{width:18px; height:18px; border-radius:50%; border:2px solid rgba(255,255,255,.25); cursor:pointer; padding:0;}
+  #cb-tools .cb-color.active{border-color:#fff; box-shadow:0 0 0 2px rgba(255,255,255,.35);}
+  #cb-tools .cb-btn{font-family:inherit; font-size:.72rem; color:#f3f3ef; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2); border-radius:6px; padding:3px 8px; cursor:pointer;}
+  #cb-tools .cb-btn:hover{background:rgba(255,255,255,.18);}
+  #cb-tools .cb-btn.active{background:#f0c000; color:#1a1a1a; border-color:#f0c000; font-weight:600;}
+  #cb-tools .cb-key{display:inline-block; margin-left:5px; padding:0 5px; font-size:.62rem; font-weight:600; line-height:1.55; border-radius:4px; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.22); color:#fff;}
+  #cb-tools .cb-btn.active .cb-key{background:rgba(0,0,0,.16); border-color:rgba(0,0,0,.25); color:#1a1a1a;}
+  #cb-tools .cb-sep{width:1px; height:18px; background:rgba(255,255,255,.18); margin:0 1px;}
+  #cb-tools .cb-hint{font-size:.68rem; color:rgba(255,255,255,.55); margin-left:4px; white-space:nowrap;}
+  @media print{#chalkboard{display:none !important;}}
+
+  /* Sélecteur de thème */
+  .theme-picker{max-width:880px; margin:0 auto; padding:14px 24px 0; display:flex; flex-wrap:wrap; align-items:center; justify-content:flex-start; gap:9px;}
+  .theme-picker .tp-label{font-family:-apple-system,'Segoe UI',sans-serif; font-size:.82rem; color:var(--muted);}
+  .theme-swatch{display:inline-flex; align-items:center; gap:7px; font-family:-apple-system,'Segoe UI',sans-serif; font-size:.78rem; cursor:pointer; border:1px solid var(--border); border-radius:999px; padding:5px 13px 5px 7px; transition:box-shadow .15s, border-color .15s;}
+  .theme-swatch .dot{width:15px; height:15px; border-radius:50%; border:1px solid rgba(127,127,127,.45); flex:0 0 auto;}
+  .theme-swatch:hover{border-color:var(--border-hover);}
+  .theme-swatch.active{box-shadow:0 0 0 2px currentColor; font-weight:700;}
+  @media print{.theme-picker{display:none;}}
+
+  /* Interroger au hasard (cold-call) */
+  .cold-call{max-width:880px; margin:22px auto 0; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px 20px;}
+  .cold-call h2{font-size:1.05rem; margin:0 0 4px;}
+  .cold-call .cc-help{font-size:.85rem; color:var(--muted); margin:0 0 12px;}
+  .cold-call .cc-row{display:flex; flex-wrap:wrap; gap:10px; align-items:center;}
+  .cold-call input.cc-names{flex:1 1 320px; min-width:220px; font-family:inherit; font-size:.92rem; padding:8px 12px; border:1px solid var(--border); border-radius:8px; background:var(--bg); color:var(--ink);}
+  .cold-call input.cc-names:focus{outline:none; border-color:var(--accent);}
+  .cc-btn{font-family:-apple-system,'Segoe UI',sans-serif; font-size:.85rem; cursor:pointer; border:1px solid var(--border); background:var(--card); color:var(--ink); border-radius:8px; padding:8px 14px;}
+  .cc-btn:hover{border-color:var(--accent); color:var(--accent);}
+  .cc-btn.primary{background:var(--accent); color:#fff; border-color:var(--accent);}
+  .cc-btn.primary:hover{filter:brightness(1.06); color:#fff;}
+  .cold-call .cc-count{font-size:.8rem; color:var(--muted); margin-top:10px; min-height:1em;}
+  #callBtn{margin-left:10px; flex:0 0 auto; font-family:-apple-system,'Segoe UI',sans-serif; font-size:.78rem; display:inline-flex; align-items:center; gap:6px; background:var(--card); color:var(--muted); border:1px solid var(--border); border-radius:999px; padding:4px 11px; cursor:pointer; white-space:nowrap; transition:border-color .15s, color .15s;}
+  #callBtn:hover{border-color:var(--accent); color:var(--accent);}
+  .quiz .cc-quiz-btn{display:block; margin-top:12px; font-family:-apple-system,'Segoe UI',sans-serif; font-size:.8rem; cursor:pointer; border:1px dashed var(--accent-border); background:var(--accent-soft); color:var(--accent); border-radius:8px; padding:6px 12px;}
+  .quiz .cc-quiz-btn:hover{border-style:solid;}
+  #cc-reveal{position:fixed; inset:0; z-index:9000; display:none; align-items:center; justify-content:center; background:rgba(10,10,8,.62); -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px);}
+  #cc-reveal.open{display:flex;}
+  #cc-reveal .cc-card{background:var(--card); border:1px solid var(--border); border-radius:18px; padding:32px 48px; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,.4); max-width:90vw;}
+  #cc-reveal .cc-toplabel{font-family:-apple-system,'Segoe UI',sans-serif; font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent);}
+  #cc-reveal .cc-name{font-size:2.6rem; font-weight:800; margin:10px 0 6px; color:var(--ink); min-width:220px; line-height:1.1;}
+  #cc-reveal .cc-name.spinning{color:var(--muted);}
+  #cc-reveal .cc-round{font-size:.82rem; color:var(--good); margin-bottom:18px; min-height:1.1em;}
+  #cc-reveal .cc-actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap;}
+  @media print{.cold-call, #callBtn, #cc-reveal, .quiz .cc-quiz-btn{display:none !important;}}
+</style>
+</head>
+<body>
+
+<div class="theme-picker" id="themePicker" aria-label="Choix du thème">
+  <span class="tp-label">🎨 Thème :</span>
+  <button type="button" class="theme-swatch" data-set-theme="midnight" style="background:#171d33; color:#e7ecf7" title="Minuit — indigo"><span class="dot" style="background:#7aa2ff"></span>Minuit</button>
+  <button type="button" class="theme-swatch" data-set-theme="ocean"    style="background:#0f2c3d; color:#e3f1f7" title="Océan — bleu turquoise"><span class="dot" style="background:#38bdf8"></span>Océan</button>
+</div>
+
+<header class="hero">
+  <span class="pill">Tutoriel autonome · 3 sessions · à votre rythme</span>
+  <h1>Claude Code pour dirigeants de PME</h1>
+  <p class="sub">Vous n'écrivez pas de logiciels. Vous dirigez une entreprise — nettoyage, rénovation, paie, assurance, tourisme, droit… Ce tutoriel vous montre comment utiliser Claude Code comme un assistant infatigable qui travaille directement sur vos fichiers : lire des devis et des contrats, construire des tableaux Excel, organiser des dossiers, et automatiser les tâches que vous repoussez depuis des mois.</p>
+</header>
+
+<section class="cold-call" id="coldCall">
+  <h2>🎤 Interroger au hasard</h2>
+  <p class="cc-help">Animateur : saisissez les prénoms des participants, séparés par des virgules. Tirez une personne au sort sur les quiz ou via le bouton « Interroger » de la barre du haut — chacun passe une fois avant qu'un nom ne revienne. La liste est mémorisée sur cet ordinateur.</p>
+  <div class="cc-row">
+    <input type="text" class="cc-names" id="ccNames" placeholder="Ex. : Laurent, Amélie, Karim, Sophie, Marc…" autocomplete="off">
+    <button type="button" class="cc-btn primary" id="ccPick">Interroger un participant</button>
+    <button type="button" class="cc-btn" id="ccReset">Nouveau tour</button>
+  </div>
+  <div class="cc-count" id="ccCount"></div>
+</section>
+
+<nav id="toc">
+  <div class="inner">
+    <span class="nav-session-label">Session&nbsp;1</span>
+    <a href="#l1">1 · C'est quoi</a>
+    <a href="#l2">2 · Installation</a>
+    <a href="#l3">3 · Première session</a>
+    <a href="#l4">4 · Bien demander</a>
+    <a href="#l5">5 · Mémoire</a>
+    <a href="#l6">6 · Automatiser</a>
+    <a href="#l7">7 · Connecter &amp; contrôler</a>
+    <a href="#l8">8 · Votre métier</a>
+    <a href="#l9">9 · Projet final</a>
+    <span class="nav-divider"></span>
+    <span class="nav-session-label">Session&nbsp;2</span>
+    <a href="#s2">Sur la route</a>
+    <span class="nav-divider"></span>
+    <span class="nav-session-label">Session&nbsp;3</span>
+    <a href="#s3">Les agents</a>
+    <span id="progressLabel">0 / 22 étapes</span>
+    <button id="themeToggle" type="button" class="sans" aria-label="Basculer le thème jour / nuit"><span class="ico">☀️</span><span class="lbl">Jour</span></button>
+    <button id="callBtn" type="button" class="sans" aria-label="Interroger un participant au hasard"><span class="ico">🎤</span><span class="lbl">Interroger</span></button>
+  </div>
+  <div id="progressBar"></div>
+</nav>
+
+<main>
+
+<!-- ============ LEÇON 1 ============ -->
+<section class="lesson" id="l1" data-min="15">
+  <span class="lessonNum">Leçon 1</span>
+  <h2>Ce qu'est vraiment Claude Code</h2>
+  <p>Oubliez le nom. Claude Code n'est pas un outil de programmation à apprendre — c'est <strong>un agent IA qui travaille sur un dossier</strong>. Vous le pointez vers un dossier de votre ordinateur, vous lui dites ce que vous voulez en français courant, et il fait le travail : il lit vos documents, crée des fichiers, construit des tableaux, renomme et réorganise, rédige des courriers. Il vous montre chaque modification avant de toucher quoi que ce soit, et vous validez ou refusez.</p>
+  <p>La différence avec le chat Claude que vous connaissez peut-être déjà :</p>
+  <table>
+    <tr><th>Claude (chat)</th><th>Claude Code</th></tr>
+    <tr><td>Vous copiez-collez des choses, il répond. Vous recopiez le résultat.</td><td>Il travaille directement dans votre dossier. Il lit lui-même 40 PDF, construit lui-même le tableau Excel, enregistre lui-même le résultat.</td></tr>
+    <tr><td>Oublie vos fichiers entre deux conversations.</td><td>Relit une note d'instructions permanentes depuis votre dossier à chaque démarrage (leçon 5).</td></tr>
+    <tr><td>Une question, une réponse.</td><td>Enchaîne les étapes d'un travail complexe et vérifie son propre travail en cours de route.</td></tr>
+  </table>
+  <p>Une image utile : <em>un assistant junior d'une patience infinie</em>. Intelligent, rapide, jamais lassé par le travail répétitif — mais vous relisez ce qu'il produit, et c'est vous qui restez le professionnel responsable.</p>
+  <div class="quiz">
+    <p class="q">Vérification rapide — quelle est la meilleure description de Claude Code ?</p>
+    <button class="opt" data-r="0">Un environnement de programmation pour développeurs</button>
+    <button class="opt" data-r="1">Un assistant qui travaille directement sur les fichiers d'un dossier que vous choisissez</button>
+    <button class="opt" data-r="0">Un moteur de recherche de documents</button>
+    <div class="explain">Il sait écrire des logiciels — mais pour vous, l'essentiel est qu'il lit, crée et réorganise vos fichiers professionnels, avec votre validation à chaque modification.</div>
+  </div>
+  <h3>Calculez votre gain (5 minutes, maintenant)</h3>
+  <p>Avant d'aller plus loin, chiffrez ce que cette formation peut vous rapporter. Prenez votre tâche répétitive la plus pénible (relances, pré-saisie, comparatifs, rapports mensuels…) et faites le calcul :</p>
+  <div class="callout tip"><strong>La formule</strong>Heures par semaine sur cette tâche × 4,3 semaines × la part automatisable (comptez 50 à 70 %) = <em>heures récupérées par mois</em>. Multipliez par votre taux horaire. Exemple : 3 h de relances par semaine → ~13 h/mois → ~7 h récupérées → 350 €/mois à 50 €/h, pour un abonnement à ~20 €/mois.</div>
+  <p>Notez votre chiffre. À la fin du tutoriel (leçon 9), vous choisirez précisément cette tâche comme premier chantier — et vous pourrez vérifier l'estimation au bout d'un mois.</p>
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">J'ai chiffré mon gain mensuel potentiel sur ma tâche la plus répétitive.</span></label>
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">J'ai compris le principe : un agent qui travaille sur un dossier, et je valide ses modifications.</span></label>
+</section>
+
+<!-- ============ LEÇON 2 ============ -->
+<section class="lesson" id="l2" data-min="10">
+  <span class="lessonNum">Leçon 2</span>
+  <h2>Installation (10 minutes, une seule fois)</h2>
+  <p>Vous utiliserez <strong>l'application Claude pour ordinateur</strong> — pas de terminal, pas d'installation technique. Suivez cette liste :</p>
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">J'ai un abonnement Claude payant (Pro, Max, Team ou Enterprise). Claude Code en a besoin.</span></label>
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">J'ai téléchargé et installé l'application Claude depuis <strong>claude.ai/download</strong> et je me suis connecté.</span></label>
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">Windows uniquement : j'ai installé <strong>Git pour Windows</strong> (git-scm.com — accepter toutes les options par défaut). C'est un utilitaire gratuit dont Claude Code a besoin sous Windows. Les utilisateurs Mac sautent cette étape.</span></label>
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">J'ai créé un dossier <strong>claude-entrainement</strong> sur mon bureau et j'y ai copié 5 à 10 vrais fichiers de travail (non critiques) : quelques PDF (devis, factures, contrats), un tableau Excel, des photos ou des brouillons.</span></label>
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">J'ai ouvert l'application Claude et cliqué sur l'onglet <strong>Code</strong> en haut.</span></label>
+  <div class="callout warn"><strong>Travaillez d'abord sur des copies</strong>Tant que vous n'avez pas confiance dans un mode de travail, copiez les documents dans votre dossier d'entraînement plutôt que de pointer Claude vers les originaux. Rien n'est modifié sans votre validation — mais les copies rendent l'expérimentation sereine.</div>
+  <div class="quiz">
+    <p class="q">Avant de laisser Claude travailler sur vos vrais documents, que recommande la leçon ?</p>
+    <button class="opt" data-r="1">Travailler sur des copies, dans un dossier d'entraînement dédié</button>
+    <button class="opt" data-r="0">Lui donner directement accès aux originaux, c'est plus rapide</button>
+    <button class="opt" data-r="0">Désactiver toute validation pour gagner du temps</button>
+    <div class="explain">Rien n'est modifié sans votre validation — mais tant que vous n'avez pas confiance, les copies rendent l'expérimentation sereine.</div>
+  </div>
+</section>
+
+<!-- ============ LEÇON 3 ============ -->
+<section class="lesson" id="l3" data-min="30">
+  <span class="lessonNum">Leçon 3</span>
+  <h2>Votre première session (20 minutes)</h2>
+  <p>Dans l'onglet <strong>Code</strong> : choisissez <strong>Local</strong>, cliquez sur <strong>Sélectionner un dossier</strong> et choisissez votre dossier <code>claude-entrainement</code>. Le modèle par défaut convient. Faites ces trois exercices dans l'ordre.</p>
+
+  <h3>Exercice 1 — Faire le tour (rien ne change)</h3>
+  <div class="prompt">Parcours ce dossier et dis-moi ce qu'il contient. Résume chaque document en une ligne, et dis-moi ce qui te semble désorganisé ou incohérent.<button class="copy">Copier</button></div>
+  <p>Observez : Claude ouvre et lit vos fichiers lui-même. Vous n'avez rien copié-collé.</p>
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">Fait — Claude m'a décrit mes fichiers.</span></label>
+
+  <h3>Exercice 2 — Le laisser modifier quelque chose (vous validez)</h3>
+  <div class="prompt">Range ces fichiers dans des sous-dossiers logiques et renomme-les selon un schéma cohérent : la date d'abord (AAAA-MM-JJ), puis une courte description. Montre-moi ton plan avant de déplacer quoi que ce soit.<button class="copy">Copier</button></div>
+  <p>Claude propose des modifications et attend. Vous verrez des boutons <strong>Accepter / Refuser</strong>. Refusez-en une exprès — remarquez que Claude demande comment procéder autrement. Cette boucle valider-ou-refuser est le cœur de l'outil.</p>
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">Fait — j'ai accepté des modifications et j'en ai refusé au moins une.</span></label>
+
+  <h3>Exercice 3 — Créer quelque chose de nouveau à partir de vos fichiers</h3>
+  <div class="prompt">Lis les PDF de ce dossier (devis, factures, contrats) et construis-moi un tableau Excel comparatif : une ligne par document, avec des colonnes pour les parties concernées, les dates clés, les montants, et tout ce qui te semble inhabituel.<button class="copy">Copier</button></div>
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">Fait — Claude a construit un tableau à partir de mes documents.</span></label>
+
+  <h3>Deux commandes à connaître</h3>
+  <ul>
+    <li><strong>Interrompre et réorienter.</strong> Vous pouvez taper une correction <em>pendant que Claude travaille</em> et appuyer sur Entrée — il s'adapte sans tout recommencer. Ou cliquez sur le bouton stop.</li>
+    <li><strong>Ajouter du contexte.</strong> Tapez <kbd>@</kbd> dans la zone de saisie pour désigner un fichier précis, ou glissez-déposez un fichier (même une photo ou un PDF) directement dans le message.</li>
+  </ul>
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">J'ai essayé d'interrompre Claude en pleine tâche et de désigner un fichier avec @.</span></label>
+  <div class="quiz">
+    <p class="q">Vous demandez à Claude de renommer et déplacer des fichiers. Que se passe-t-il ?</p>
+    <button class="opt" data-r="0">Il applique tout immédiatement, sans rien demander</button>
+    <button class="opt" data-r="1">Il propose un plan et attend votre Accepter / Refuser pour chaque modification</button>
+    <button class="opt" data-r="0">Il supprime les fichiers d'origine après les avoir déplacés</button>
+    <div class="explain">La boucle valider-ou-refuser est le cœur de l'outil : vous pouvez même refuser une modification précise, et Claude propose une autre voie.</div>
+  </div>
+</section>
+
+<!-- ============ LEÇON 4 ============ -->
+<section class="lesson" id="l4" data-min="25">
+  <span class="lessonNum">Leçon 4</span>
+  <h2>Les cinq règles pour bien demander</h2>
+  <p>La qualité de ce que vous obtenez dépend de la qualité de ce que vous demandez. Cinq règles couvrent presque tout :</p>
+
+  <h3>1 · Décrivez le résultat, pas les étapes</h3>
+  <p>Dites à quoi ressemble le travail terminé. Ne micro-gérez pas l'ordre des opérations.</p>
+  <div class="prompt">Produis une synthèse d'une page de cette proposition, lisible en deux minutes par un client qui n'a aucune connaissance technique.<button class="copy">Copier</button></div>
+
+  <h3>2 · Donnez-lui le document</h3>
+  <p>Ne décrivez pas un document — donnez-le-lui. Glissez-le dans le message ou utilisez <kbd>@</kbd>.</p>
+  <div class="prompt">Pourquoi le total de cette facture ne correspond-il pas au devis signé ? @facture-mars.pdf @devis-signe.pdf<button class="copy">Copier</button></div>
+
+  <h3>3 · Donnez-lui un moyen de vérifier son travail</h3>
+  <p>Demandez la vérification dans le même message : Claude itérera au lieu de s'arrêter au premier jet.</p>
+  <div class="prompt">Construis un tableau récapitulatif de ces factures, puis vérifie chaque total par rapport au PDF source et signale les lignes dont tu n'es pas certain.<button class="copy">Copier</button></div>
+
+  <h3>4 · Fixez un objectif mesurable</h3>
+  <div class="prompt">Réécris ces 12 fiches produit au même format : titre de moins de 10 mots, corps de moins de 120 mots, et un appel à l'action en fin de texte.<button class="copy">Copier</button></div>
+
+  <h3>5 · Précisez la forme de la réponse</h3>
+  <p>Nommez le format, la longueur et le destinataire.</p>
+  <div class="prompt">Résume ce rapport de 40 pages en une note d'une page pour mon associé, puis en trois points que je peux envoyer par SMS à un client.<button class="copy">Copier</button></div>
+
+  <div class="quiz">
+    <p class="q">Quelle demande donnera le meilleur résultat ?</p>
+    <button class="opt" data-r="0">« Ouvre le dossier devis, puis ouvre devis1.pdf, puis regarde la page 3, puis ouvre devis2.pdf… »</button>
+    <button class="opt" data-r="1">« Compare les trois devis de ce dossier dans un seul tableau — harmonise les postes pour qu'ils soient comparables, et signale tout ce qu'un devis inclut et que les autres n'ont pas. »</button>
+    <div class="explain">Le résultat, pas les étapes. La seconde demande décrit le travail terminé et inclut une auto-vérification (« signale tout ce que… »), donc Claude travaille jusqu'à y arriver.</div>
+  </div>
+
+  <h3>À vous</h3>
+  <p>Écrivez une demande pour une vraie tâche de votre entreprise cette semaine. Vérifiez-la contre les cinq règles : résultat décrit ? document joint ? auto-vérification incluse ? objectif mesurable ? forme de la réponse précisée ?</p>
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">J'ai écrit et lancé une vraie demande tirée de mon activité.</span></label>
+</section>
+
+<!-- ============ LEÇON 5 ============ -->
+<section class="lesson" id="l5" data-min="20">
+  <span class="lessonNum">Leçon 5</span>
+  <h2>Lui donner de la mémoire : la note CLAUDE.md</h2>
+  <p>À chaque démarrage dans un dossier, Claude Code commence par lire un fichier nommé <strong>CLAUDE.md</strong> s'il existe. Voyez-le comme la note d'instructions permanentes que vous donneriez à un nouvel assistant le premier jour : qui nous sommes, comment nous écrivons, ce qu'il ne faut jamais toucher. Écrite une fois, chaque future session démarre déjà briefée.</p>
+  <p>Demandez à Claude de la rédiger pour vous :</p>
+  <div class="prompt">Crée un fichier CLAUDE.md pour ce dossier avec mes instructions permanentes. Inclus : le nom de mon entreprise et son activité, notre ton pour les documents écrits, notre convention de nommage des fichiers, les mentions obligatoires à inclure dans les documents destinés aux clients, et la liste des fichiers ou sous-dossiers à ne jamais modifier. Pose-moi des questions pour compléter ce que tu ne sais pas.<button class="copy">Copier</button></div>
+  <p>Ouvrez ensuite le fichier créé et modifiez-le comme n'importe quel document. Exemples d'instructions que des dirigeants y mettent :</p>
+  <ul>
+    <li>« Tous les textes destinés aux clients sont en français professionnel et chaleureux ; jamais de point d'exclamation. »</li>
+    <li>« Les fichiers sont nommés AAAA-MM-JJ-description. Toujours respecter ce format. »</li>
+    <li>« Ne jamais modifier le contenu du sous-dossier /contrats-signes. »</li>
+    <li>« Chaque devis doit inclure nos conditions de règlement standard (voir modeles/conditions.md) et la mention de notre assurance décennale. »</li>
+    <li>« Tout document client produit avec l'aide de l'IA porte la mention : <em>Document préparé avec l'aide d'une IA, relu et validé par [votre nom]</em>. » (bonne pratique de transparence, dans l'esprit de l'article 50 du règlement européen sur l'IA)</li>
+  </ul>
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">Mon dossier d'entraînement a son CLAUDE.md, et je l'ai testé (j'ai demandé une rédaction et vérifié qu'il suit mes règles de ton).</span></label>
+  <div class="quiz">
+    <p class="q">À quoi sert le fichier CLAUDE.md ?</p>
+    <button class="opt" data-r="1">Ce sont vos instructions permanentes, relues par Claude à chaque démarrage dans le dossier</button>
+    <button class="opt" data-r="0">C'est une sauvegarde automatique de vos documents</button>
+    <button class="opt" data-r="0">C'est un fichier technique réservé aux développeurs</button>
+    <div class="explain">Écrite une fois (ton, conventions de nommage, mentions obligatoires, dossiers à ne pas toucher), la note brief chaque future session sans que vous ayez à la répéter.</div>
+  </div>
+</section>
+
+<!-- ============ LEÇON 6 ============ -->
+<section class="lesson" id="l6" data-min="15">
+  <span class="lessonNum">Leçon 6</span>
+  <h2>Rendre le travail répétable : compétences et planification</h2>
+  <p>La première fois, c'est une demande. La cinquième fois, ça doit être un bouton.</p>
+
+  <h3>6a · Créez votre compétence — et ouvrez le capot</h3>
+  <p>Une compétence (« skill ») est une procédure réutilisable que vous lancez en tapant <kbd>/</kbd> et son nom — comme <code>/comparer-devis</code> ou <code>/relances-clients</code>. Vous ne l'écrivez jamais vous-même : vous la faites écrire.</p>
+  <div class="prompt">Prends la tâche de comparaison de devis que nous venons de faire et transforme-la en compétence réutilisable nommée /comparer-devis, pour que je puisse la relancer sur n'importe quel dossier de devis PDF à l'avenir. Quand c'est fait, ouvre le fichier que tu as créé pour que je le lise.<button class="copy">Copier</button></div>
+  <p>Regardez ce que Claude a créé : un simple fichier texte (un <code>SKILL.md</code>) — un nom, une ligne « quand l'utiliser », et les étapes de la procédure, en français. <strong>C'est une fiche recette, pas du code.</strong> Et c'est à vous : modifiez une ligne (ajoutez par exemple « termine toujours par une recommandation d'un paragraphe »), enregistrez, relancez <code>/comparer-devis</code> — la procédure a changé. C'est votre savoir-faire, formalisé et modifiable.</p>
+  <p>Pour aller plus loin, Anthropic publie une compétence officielle <em>qui fabrique les compétences</em> : <strong>/skill-creator</strong> (installable depuis le dépôt officiel ou le bouton + → Plugins). Invoquez-la, elle vous interviewe sur votre procédure et rédige le SKILL.md dans les règles de l'art — elle sait même tester et améliorer une compétence existante. C'est l'outil à montrer à celui qui accroche.</p>
+  <h3>6b · Partagez-la</h3>
+  <p>Une compétence est un dossier de fichiers comme un autre : copiez-le à un collègue (il le dépose au même endroit dans son projet, ou demande à Claude « installe cette compétence ») et votre méthode devient celle de l'équipe. C'est ainsi qu'une bonne procédure cesse de dépendre de la personne qui l'a inventée.</p>
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">J'ai créé une /compétence, ouvert son SKILL.md, modifié une ligne et relancé.</span></label>
+  <h3>6c · En trouver en ligne (optionnel — avec prudence)</h3>
+  <p>Il existe des compétences toutes faites : le dépôt officiel d'Anthropic (<strong>github.com/anthropics/skills</strong>) et le bouton <strong>+</strong> → <strong>Plugins</strong> dans l'application sont la base sûre ; des places de marché communautaires (skills.sh et d'autres) en proposent des centaines de plus — mais personne ne les a vérifiées pour vous.</p>
+  <p>Ce qui s'utilise vraiment quand on n'est pas développeur : les <strong>document-skills</strong> officielles (créer et manipuler Word, Excel, PowerPoint, PDF — c'est elles qui produisent vos livrables), le plugin <strong>legal</strong> (tri de NDA, revue de contrats — très utilisé en PME), et <strong>/skill-creator</strong> vu plus haut. Les classements d'installations que vous croiserez en ligne sont dominés par des outils de développeurs (Frontend Design, Superpowers…) — utiles à eux, pas à vous : ne vous laissez pas impressionner, votre liste de départ tient en trois noms.</p>
+  <div class="callout warn"><strong>Avant d'installer une compétence trouvée en ligne</strong>Une compétence, ce sont les instructions d'un inconnu que Claude suivra avec accès à vos fichiers. Cinq réflexes : 1) lisez le SKILL.md avant d'installer — si vous ne comprenez pas ce qu'il fait en langage courant, n'installez pas ; 2) méfiance si la compétence exécute des scripts, va chercher des adresses web ou demande des identifiants ; 3) premier essai dans un dossier jetable, jamais sur vos vrais documents ; 4) données clients = sources vérifiées uniquement (dépôt officiel, plugins de l'app) ; 5) dans le doute, demandez à Claude lui-même : « audite ce fichier de compétence et dis-moi ce qu'il fait exactement ».</div>
+
+  <h3>Les tâches planifiées — le travail qui se fait tout seul</h3>
+  <p>L'application peut lancer une demande selon un calendrier. Première tâche planifiée classique :</p>
+  <div class="prompt">Tous les lundis à 8h, regarde les fichiers ajoutés à ce dossier pendant la semaine écoulée et rédige-moi un point d'une page : ce qui est arrivé, ce qui demande mon attention, et toutes les échéances mentionnées dans les documents.<button class="copy">Copier</button></div>
+  <p>Les tâches planifiées depuis l'application tournent sur votre machine. Pour des automatisations qui tournent même ordinateur éteint, il existe les « Routines » dans le cloud — à explorer plus tard.</p>
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">J'ai créé (ou au moins trouvé) les tâches planifiées dans l'application.</span></label>
+  <div class="quiz">
+    <p class="q">Une /compétence (le fichier SKILL.md), c'est quoi au juste ?</p>
+    <button class="opt" data-r="0">Du code que seul un développeur peut relire ou modifier</button>
+    <button class="opt" data-r="1">Une fiche-recette en français que vous pouvez ouvrir, lire et modifier vous-même</button>
+    <button class="opt" data-r="0">Un abonnement payant supplémentaire</button>
+    <div class="explain">Un nom, une ligne « quand l'utiliser », des étapes en français : votre savoir-faire formalisé. Modifiez une ligne, enregistrez, relancez — la procédure a changé.</div>
+  </div>
+</section>
+
+<!-- ============ LEÇON 7 ============ -->
+<section class="lesson" id="l7" data-min="30">
+  <span class="lessonNum">Leçon 7</span>
+  <h2>Connecter vos outils — et garder le contrôle</h2>
+
+  <h3>Les connecteurs</h3>
+  <p>Claude Code peut se brancher sur les outils que vous utilisez déjà — Gmail/Outlook, Google Drive, Slack, agendas, CRM — via des connecteurs (nom technique : « MCP »). Jusqu'ici vous avez travaillé sur des fichiers déposés dans un dossier ; un connecteur laisse Claude aller chercher la matière directement dans votre messagerie ou votre Drive, et y ranger ce qu'il produit. Une fois deux outils connectés, une seule demande peut les traverser.</p>
+
+  <div class="callout tip"><strong>À connecter avant la session</strong>Cet atelier suppose que vous avez déjà autorisé <strong>une messagerie</strong> (Gmail ou Outlook) <em>et</em> <strong>un espace de fichiers</strong> (Google Drive ou OneDrive) — c'était le point&nbsp;4 de l'e-mail de préparation. L'autorisation se fait une fois, via le bouton <strong>+</strong> à côté de la zone de saisie&nbsp;: choisissez le connecteur, ouvrez votre compte, validez l'accès. Si vous ne l'avez pas fait, faites-le maintenant (2&nbsp;min) ou suivez la voie « sans connecteur » plus bas — personne ne reste bloqué.</p></div>
+
+  <h3>Atelier — 20 minutes, deux temps</h3>
+  <p>L'idée&nbsp;: passer de « Claude lit un fichier » à « Claude va chercher l'information lui-même, puis la range ». On commence par un seul outil, puis on enchaîne deux outils dans une même demande.</p>
+
+  <details class="exercise" open><summary>A · Un seul outil (5 min) — interroger votre messagerie</summary><div class="body">
+    <p>But&nbsp;: vérifier que la connexion fonctionne et voir Claude lire votre vraie boîte. Aucun fichier modifié, aucun envoi.</p>
+    <div class="prompt">Dans ma messagerie, retrouve les e-mails reçus cette semaine d'un même client ou fournisseur. Résume en 5 lignes ce qu'il attend de moi et signale toute échéance ou pièce jointe importante. Ne réponds à personne, ne supprime rien — fais seulement la synthèse.<button class="copy">Copier</button></div>
+    <p class="sans" style="font-size:.9rem">La première fois, Claude demande l'autorisation d'accéder à la messagerie&nbsp;: lisez, puis <strong>Autoriser</strong>. C'est la ceinture de sécurité, pas une erreur.</p>
+  </div></details>
+
+  <details class="exercise"><summary>B · Deux outils dans une demande (12 min) — messagerie → Drive → suivi</summary><div class="body">
+    <p>But&nbsp;: une demande qui lit un e-mail, classe sa pièce jointe dans votre Drive, et note les échéances. C'est le geste qui fait gagner du temps au quotidien.</p>
+    <div class="prompt">Retrouve dans ma messagerie le dernier e-mail d'un client avec une pièce jointe (devis, facture ou contrat). Enregistre la pièce jointe dans mon Drive, dans un dossier au nom du client (crée-le s'il n'existe pas). Puis ajoute à un fichier suivi-clients.md, dans le même Drive, une ligne : date, client, objet de l'e-mail, et toute échéance mentionnée. Montre-moi ce que tu comptes faire avant de l'enregistrer.<button class="copy">Copier</button></div>
+    <p class="sans" style="font-size:.9rem">Restez en mode <strong>Demander</strong>&nbsp;: Claude annonce chaque étape (lire, ranger, écrire) et attend votre feu vert. Vérifiez le dossier de destination et le nom du fichier avant de valider.</p>
+  </div></details>
+
+  <div class="callout warn"><strong>Sans connecteur ? L'export, le même atelier</strong>Si vous n'avez pas connecté de compte, ou si votre logiciel métier français n'a pas de connecteur (Silae, Batigest, eSeason, Secib…), le réflexe ne change pas&nbsp;: <strong>exportez</strong>. Presque tous savent sortir un Excel, un CSV ou un PDF. Déposez l'export dans votre dossier d'entraînement, puis refaites l'exercice&nbsp;B sur ces fichiers — Claude lit, classe et tient le tableau de suivi exactement pareil, sans connexion.</div>
+
+  <div class="callout warn"><strong>Données clients&nbsp;: avant de connecter votre vraie boîte</strong>Un connecteur donne à Claude accès à de vrais e-mails et fichiers. En atelier, préférez un compte de test ou un client dont les données ne sont pas sensibles. Secteur réglementé (paie, patrimoine, assurance, droit)&nbsp;? Vérifiez les conditions d'utilisation des données de votre offre et le RGPD avant d'y faire passer des données réelles — voir les règles de confiance ci-dessous.</div>
+
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">J'ai fait l'exercice A (un outil) puis l'exercice B (deux outils) — OU leur version par export — et j'ai validé chaque étape moi-même.</span></label>
+
+  <h3>Les modes de permission — votre molette de contrôle</h3>
+  <table>
+    <tr><th>Mode</th><th>Ce que ça signifie</th><th>Quand l'utiliser</th></tr>
+    <tr><td><strong>Demander</strong> (par défaut)</td><td>Claude propose ; vous validez chaque modification.</td><td>Toujours, tant qu'un mode de travail n'a pas gagné votre confiance. <strong>Restez ici.</strong></td></tr>
+    <tr><td>Accepter automatiquement</td><td>Les modifications de fichiers s'appliquent sans demander.</td><td>Les routines que vous avez déjà vérifiées de nombreuses fois.</td></tr>
+    <tr><td>Mode plan</td><td>Claude analyse et propose un plan, mais ne touche à rien.</td><td>Les gros travaux ou les travaux risqués — voyez tout le plan avant que rien ne commence.</td></tr>
+  </table>
+
+  <h3>Les règles de confiance</h3>
+  <ul>
+    <li><strong>Rien ne change sans votre validation</strong> en mode Demander — et vous pouvez refuser chaque modification individuellement.</li>
+    <li><strong>Claude peut se tromper.</strong> Vérifiez les chiffres, les dates et les clauses juridiques par rapport à la source. C'est un assistant junior brillant, pas le professionnel responsable. Le responsable, c'est vous.</li>
+    <li><strong>Secteur réglementé ?</strong> (paie, patrimoine, assurance, droit) Sur les offres Team et Enterprise, vos données ne servent pas à entraîner les modèles. Vérifiez les conditions d'utilisation des données de votre offre avant d'y faire passer des données clients confidentielles — et le RGPD s'applique : minimisez et anonymisez quand c'est possible.</li>
+    <li><strong>Coût :</strong> votre abonnement inclut un usage généreux avec des limites qui se réinitialisent régulièrement. Le modèle par défaut convient à la plupart des travaux.</li>
+  </ul>
+  <div class="quiz">
+    <p class="q">Vous voulez que Claude restructure l'archive complète de vos chantiers — des centaines de dossiers. Premier réflexe ?</p>
+    <button class="opt" data-r="0">Mode acceptation automatique, c'est plus rapide</button>
+    <button class="opt" data-r="1">Mode plan — examiner toute la structure proposée avant que quoi que ce soit ne bouge</button>
+    <button class="opt" data-r="0">Le faire à la main, trop risqué pour une IA</button>
+    <div class="explain">Le mode plan montre l'approche complète sans aucune modification. Validez le plan, puis laissez-le exécuter en mode Demander.</div>
+  </div>
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">Je connais les trois modes de permission et j'ai essayé le mode plan une fois.</span></label>
+</section>
+
+<!-- ============ LEÇON 8 ============ -->
+<section class="lesson" id="l8" data-min="50">
+  <span class="lessonNum">Leçon 8</span>
+  <h2>Exercices pour votre métier</h2>
+  <p>Choisissez votre onglet, puis téléchargez le <strong>dossier d'exercices de votre métier</strong> (fourni par le formateur) et ouvrez-le dans Claude : il contient une entreprise fictive, ses fichiers, et des erreurs cachées à faire trouver. Chaque dossier offre aussi deux bonus : tapez <code>/demarrer</code> pour que Claude rejoue cette formation avec vous en autonomie, et demandez en fin d'exercice la critique du <em>personnage relecteur</em> indiqué dans le README du dossier. Une fois à l'aise, refaites les exercices sur des <strong>copies</strong> de vos propres fichiers — c'est là que la valeur apparaît.</p>
+
+  <div class="tabs sans" role="tablist">
+    <button class="active" data-tab="t-net">Nettoyage</button>
+    <button data-tab="t-com">Communication BtoB</button>
+    <button data-tab="t-tou">Tourisme &amp; Vin</button>
+    <button data-tab="t-ren">Rénovation</button>
+    <button data-tab="t-rep">E-réputation</button>
+    <button data-tab="t-pat">Patrimoine</button>
+    <button data-tab="t-avo">Avocat d'affaires</button>
+    <button data-tab="t-ass">Courtage assurance</button>
+    <button data-tab="t-fro">Froid / Clim / PAC</button>
+    <button data-tab="t-sol">Solaire / EnR</button>
+    <button data-tab="t-adm">Admin externalisé</button>
+    <button data-tab="t-pai">Paie</button>
+  </div>
+
+  <!-- 1 Nettoyage -->
+  <div class="tabpanel active" id="t-net">
+    <p class="context">Plannings d'équipes, pointage, devis, facturation récurrente, relances, FDS produits. Vos exports Skello/Combo, Timmi/Kelio et Pennylane sont la matière première.</p>
+    <div class="callout warn"><strong>Essai naïf d'abord</strong>Avant l'exercice 1, lancez tel quel : <em>« Compare le planning et les pointages. »</em> Observez le résultat, notez ce qui manque, puis lancez le prompt complet ci-dessous et comparez. La différence entre les deux, c'est la leçon 4.</div>
+    <details class="exercise"><summary>1 · Écarts pointage / planning</summary><div class="body">
+      <p>Déposez l'export du planning (Excel) et les fiches de pointage du mois.</p>
+      <div class="prompt">Compare le planning prévu @planning-mai.xlsx avec les fiches de pointage de ce dossier. Construis un tableau des écarts : par agent et par site, heures prévues vs pointées, retards récurrents, sites en sous-couverture. Vérifie tes totaux et signale les lignes douteuses.<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>2 · Relances clients à partir des impayés</summary><div class="body">
+      <div class="prompt">Voici l'export des factures impayées @impayes.csv. Rédige une lettre de relance personnalisée par client : ton ferme mais courtois pour un premier retard, plus formel au-delà de 60 jours avec mention des pénalités prévues dans nos conditions. Une lettre par fichier, nommée AAAA-MM-JJ-relance-nomclient.<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>3 · Registre des FDS produits</summary><div class="body">
+      <div class="prompt">Lis toutes les fiches de données de sécurité (FDS) PDF de ce dossier et construis un registre Excel : produit, fournisseur, dangers principaux, EPI requis, date de la fiche. Signale les fiches de plus de 3 ans à redemander aux fournisseurs — j'en ai besoin pour le DUERP et l'audit Qualipropre.<button class="copy">Copier</button></div>
+    </div></details>
+  </div>
+
+  <!-- 2 Communication -->
+  <div class="tabpanel" id="t-com">
+    <p class="context">Briefs, devis, contenus, reporting, veille. Vos exports analytics et vos briefs Notion/Word sont la matière première.</p>
+    <div class="callout warn"><strong>Essai naïf d'abord</strong>Avant l'exercice 2, lancez tel quel : <em>« Fais-moi un rapport sur les campagnes. »</em> Regardez ce que Claude suppose (quel format ? quel destinataire ? quelles recommandations ?), puis lancez le prompt complet et comparez.</div>
+    <details class="exercise"><summary>1 · Brief client → pack de contenus</summary><div class="body">
+      <p>Déposez un brief client et 2-3 productions passées qui incarnent le ton de la marque.</p>
+      <div class="prompt">Lis le brief @brief-client.docx et les exemples du dossier pour t'imprégner du ton. Produis : 5 variantes d'accroche publicitaire, 3 objets d'e-mail avec texte d'aperçu, et un calendrier éditorial de 2 semaines en tableau Excel. Respecte le ton exactement, et les règles ARPP (pas de superlatifs invérifiables).<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>2 · Rapport de performance multi-plateformes</summary><div class="body">
+      <div class="prompt">Voici les exports CSV du mois (Meta, LinkedIn, Brevo). Construis un rapport client : un tableau consolidé coût / clics / conversions par canal, puis une demi-page en langage simple sur ce qui a fonctionné et ce qu'on change le mois prochain. Format PDF prêt à envoyer, à notre charte (voir CLAUDE.md).<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>3 · Veille concurrentielle structurée</summary><div class="body">
+      <div class="prompt">Voici des captures et pages enregistrées des communications de 4 concurrents. Construis une grille d'analyse : positionnement, messages clés, canaux, fréquence, ce qu'ils font que nous ne faisons pas. Termine par 3 recommandations argumentées.<button class="copy">Copier</button></div>
+    </div></details>
+  </div>
+
+  <!-- 3 Tourisme -->
+  <div class="tabpanel" id="t-tou">
+    <p class="context">Réservations, taxe de séjour, états des lieux, et côté cave : DRM, registre, déclarations. Vos exports eSeason/Inaxel et Isavigne sont la matière première.</p>
+    <div class="callout warn"><strong>Essai naïf d'abord</strong>Avant l'exercice 1, lancez tel quel : <em>« Prépare la taxe de séjour. »</em> Observez : quels tarifs Claude applique-t-il ? Que fait-il des lignes incomplètes ? Puis lancez le prompt complet et comparez.</div>
+    <details class="exercise"><summary>1 · Préparer la taxe de séjour mensuelle</summary><div class="body">
+      <div class="prompt">Voici l'export des réservations du mois @reservations-mai.csv. Prépare le tableau de la déclaration de taxe de séjour : nuitées par tarif, exonérations (mineurs), total dû. Vérifie tes totaux deux fois et signale les réservations dont les données sont incomplètes pour que je les corrige avant de déclarer.<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>2 · Contrôle de cohérence avant la DRM</summary><div class="body">
+      <div class="prompt">Voici le registre de cave du mois et les factures de vente de vin. Avant que je remplisse la DRM, croise les deux : les sorties du registre correspondent-elles aux ventes facturées ? Liste chaque écart avec sa source. Ne remplis rien toi-même — donne-moi le tableau de contrôle.<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>3 · Réponses aux demandes de réservation</summary><div class="body">
+      <div class="prompt">Voici 10 e-mails de demandes de renseignements types. Rédige nos réponses modèles : disponibilités, acompte, conditions d'annulation, animaux, arrivées tardives. Ton chaleureux du Sud mais précis sur les conditions. Range-les dans un dossier modeles-reponses/ pour que je les réutilise.<button class="copy">Copier</button></div>
+    </div></details>
+  </div>
+
+  <!-- 4 Rénovation -->
+  <div class="tabpanel" id="t-ren">
+    <p class="context">Métrés, devis détaillés, situations de travaux, MaPrimeRénov', attestations TVA. Vos exports Batigest/Obat et vos dossiers chantiers sont la matière première.</p>
+    <div class="callout warn"><strong>Essai naïf d'abord</strong>Avant l'exercice 1, lancez tel quel : <em>« Compare les devis. »</em> Notez ce que Claude ne vérifie pas spontanément (décennale ? exclusions ? postes manquants ?), puis lancez le prompt complet et comparez.</div>
+    <details class="exercise"><summary>1 · Comparer les devis sous-traitants</summary><div class="body">
+      <div class="prompt">Lis les trois devis sous-traitants PDF de ce dossier. Construis un tableau qui harmonise leurs postes pour les rendre comparables. Signale : les postes qu'un seul devis inclut, les prix anormalement bas, les exclusions cachées dans les petites lignes, et vérifie que chacun mentionne sa décennale. Termine par une recommandation d'un paragraphe.<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>2 · Contrôle de complétude d'un dossier MaPrimeRénov'</summary><div class="body">
+      <div class="prompt">Voici le dossier MaPrimeRénov' du chantier Martin. Vérifie sa complétude : devis conforme (mentions RGE, références chantier), attestation RGE valide à la date du devis, avis d'imposition, formulaires. Liste ce qui manque ou ce qui est incohérent (dates, montants, adresses) entre les pièces. Ne soumets rien — donne-moi la liste de contrôle.<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>3 · Situation de travaux mensuelle</summary><div class="body">
+      <div class="prompt">À partir du devis initial @devis-chantier.pdf et de mes notes d'avancement @avancement.xlsx, prépare la situation de travaux n°3 : pourcentage d'avancement par poste, montant de la situation, cumul facturé, reste à facturer. Vérifie que le cumul ne dépasse jamais le marché. Format Excel + un PDF propre à envoyer au client.<button class="copy">Copier</button></div>
+    </div></details>
+  </div>
+
+  <!-- 5 E-réputation -->
+  <div class="tabpanel" id="t-rep">
+    <p class="context">Collecte, modération, réponses aux avis, reporting. Vos exports CSV d'avis et vos fiches Google sont la matière première.</p>
+    <div class="callout warn"><strong>Essai naïf d'abord</strong>Avant l'exercice 1, lancez tel quel : <em>« Réponds aux avis. »</em> Observez le ton générique et les réponses copiées-collées, puis lancez le prompt complet (charte, personnalisation, cas À VALIDER) et comparez.</div>
+    <details class="exercise"><summary>1 · Répondre à un mois d'avis</summary><div class="body">
+      <div class="prompt">Voici l'export des avis du mois @avis-mai.csv. Rédige une réponse personnalisée pour chacun : remerciement spécifique (cite un détail de l'avis) pour les positifs, réponse posée et orientée solution pour les négatifs, jamais de formule copiée-collée deux fois. Pour les avis négatifs mettant en cause un fait précis, marque-les « À VALIDER » pour que je vérifie avant publication.<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>2 · Détection d'avis suspects</summary><div class="body">
+      <div class="prompt">Analyse cet export d'avis et signale les profils suspects au sens DGCCRF : rafales d'avis le même jour, formulations quasi identiques, comptes sans historique, notes extrêmes sans texte. Construis un tableau de preuves (avec les captures du dossier en référence) que je peux transmettre au client ou à la plateforme.<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>3 · Rapport client mensuel</summary><div class="body">
+      <div class="prompt">À partir de @avis-mai.csv, construis le rapport mensuel du client : note moyenne et évolution, volume d'avis, thèmes récurrents (positifs et négatifs) avec citations, délai moyen de réponse. Une page, graphiques simples, langage non technique. Ce rapport doit donner envie de renouveler l'abonnement.<button class="copy">Copier</button></div>
+    </div></details>
+  </div>
+
+  <!-- 6 Patrimoine -->
+  <div class="tabpanel" id="t-pat">
+    <div class="callout warn"><strong>Conformité AMF / LCB-FT</strong>Claude prépare et contrôle ; le devoir de conseil, le DER et la décision restent les vôtres. Pas de données clients nominatives hors d'une offre dont vous avez validé les conditions de traitement des données (Team/Enterprise) — anonymisez pour vous entraîner.</div>
+    <div class="callout warn"><strong>Essai naïf d'abord</strong>Avant l'exercice 1, lancez tel quel : <em>« Prépare mon RDV client. »</em> Observez ce que Claude ne pense pas à contrôler (KYC périmé ? pièces réglementaires ?), puis lancez le prompt complet et comparez.</div>
+    <details class="exercise"><summary>1 · Préparer un RDV client</summary><div class="body">
+      <div class="prompt">Voici le dossier (anonymisé) d'un client : dernier bilan patrimonial, reportings de portefeuille, échanges récents. Prépare ma fiche de RDV : situation en 10 lignes, évolutions depuis le dernier point, questions à poser, éléments KYC à mettre à jour (anciens de plus de 24 mois), et points de vigilance réglementaires.<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>2 · Contrôle de complétude réglementaire</summary><div class="body">
+      <div class="prompt">Parcours ce dossier client (anonymisé) et vérifie la présence et la cohérence des pièces réglementaires : lettre de mission, DER/déclaration d'adéquation, KYC à jour, DIC remis pour chaque souscription. Construis un tableau conforme/manquant/périmé avec la date de chaque pièce. Ne génère aucun document réglementaire — signale seulement.<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>3 · Premier jet de synthèse trimestrielle</summary><div class="body">
+      <div class="prompt">À partir de ces reportings de portefeuille PDF, rédige le premier jet de la synthèse trimestrielle client : performance par poche, mouvements, frais, en langage clair et factuel, sans aucune recommandation d'investissement — je rédige moi-même la partie conseil.<button class="copy">Copier</button></div>
+    </div></details>
+  </div>
+
+  <!-- 7 Avocat -->
+  <div class="tabpanel" id="t-avo">
+    <div class="callout warn"><strong>Secret professionnel</strong>Entraînez-vous sur des pièces anonymisées. Vérifiez chaque référence de clause et de jurisprudence avant de vous y fier : vous restez le professionnel responsable au sens du RIN.</div>
+    <div class="callout warn"><strong>Essai naïf d'abord</strong>Avant l'exercice 1, lancez tel quel : <em>« Résume ce dossier. »</em> Observez : pas de chronologie sourcée, pas de pièces citées, pas de trous signalés. Puis lancez le prompt complet et comparez.</div>
+    <details class="exercise"><summary>1 · Chronologie d'un dossier</summary><div class="body">
+      <div class="prompt">Voici les pièces scannées d'un dossier (anonymisé). Construis la chronologie complète : date, événement, pièce source (avec son nom de fichier), partie concernée. Ordre chronologique, en tableau, puis une synthèse narrative d'une page. Signale les périodes où il semble manquer des pièces.<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>2 · Analyse de contrat clause par clause</summary><div class="body">
+      <div class="prompt">Lis @contrat.pdf et produis une analyse clause par clause : résumé en langage clair, clauses inhabituelles ou déséquilibrées, clauses attendues mais absentes pour ce type de contrat, délais et préavis, et reconduction tacite. Cite le numéro de clause pour chaque signalement. C'est un premier filtrage — je relis tout.<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>3 · Préparation de la facturation au temps</summary><div class="body">
+      <div class="prompt">Voici mes notes de temps du mois @temps-mai.xlsx. Prépare les projets de notes d'honoraires par dossier : regroupe les diligences par nature, rédige les libellés en style cabinet (précis, sobres), calcule les totaux au taux horaire indiqué, et signale les saisies ambiguës ou en double avant que je valide.<button class="copy">Copier</button></div>
+    </div></details>
+  </div>
+
+  <!-- 8 Assurance -->
+  <div class="tabpanel" id="t-ass">
+    <div class="callout warn"><strong>DDA / devoir de conseil</strong>Claude compare et prépare ; la préconisation tracée et signée reste la vôtre.</div>
+    <div class="callout warn"><strong>Essai naïf d'abord</strong>Avant l'exercice 1, lancez tel quel : <em>« Compare les polices. »</em> Observez : compare-t-il les exclusions ? Cite-t-il ses sources ? Puis lancez le prompt complet et comparez.</div>
+    <details class="exercise"><summary>1 · Tableau comparatif de garanties</summary><div class="body">
+      <div class="prompt">Lis les trois projets de police et leurs IPID dans ce dossier. Construis un tableau comparatif : garanties, plafonds, franchises, exclusions notables, prime. Signale spécialement les exclusions qu'une seule compagnie applique et les écarts de plafond supérieurs à 20 %. C'est ma base pour la mise en concurrence — cite la page source de chaque chiffre.<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>2 · Échéancier des renouvellements</summary><div class="body">
+      <div class="prompt">Parcours les polices PDF de ce dossier clients et construis un échéancier Excel : client, compagnie, risque, échéance principale, préavis de résiliation, prime. Trie par date limite de dénonciation et signale tout ce qui doit être traité dans les 90 jours. C'est mon outil de pilotage des renouvellements.<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>3 · Dossier sinistre structuré</summary><div class="body">
+      <div class="prompt">Voici les pièces en vrac d'un sinistre (e-mails, photos, devis de réparation, constat). Range-les avec un nommage cohérent, construis la chronologie du sinistre, et rédige le projet de déclaration à la compagnie avec la liste des pièces jointes. Signale les pièces manquantes habituellement exigées.<button class="copy">Copier</button></div>
+    </div></details>
+  </div>
+
+  <!-- 9 Froid -->
+  <div class="tabpanel" id="t-fro">
+    <p class="context">Tournées, contrôles d'étanchéité, traçabilité fluides, contrats de maintenance. Vos exports Praxedo/Organilog et vos CERFA sont la matière première.</p>
+    <div class="callout warn"><strong>Essai naïf d'abord</strong>Avant l'exercice 1, lancez tel quel : <em>« Vérifie les fluides. »</em> Observez : croise-t-il les bons avec les CERFA ? Calcule-t-il les prochains contrôles obligatoires ? Puis lancez le prompt complet et comparez.</div>
+    <details class="exercise"><summary>1 · Contrôle de la traçabilité fluides</summary><div class="body">
+      <div class="prompt">Voici les bons d'intervention du trimestre et les CERFA 15497 du dossier. Croise les deux : chaque intervention avec manipulation de fluide a-t-elle son CERFA ? Construis le tableau de suivi : équipement, fluide, quantités chargées/récupérées, date du dernier contrôle d'étanchéité et date du prochain contrôle obligatoire. Signale les manquants — c'est ce qu'on me demande en cas de contrôle.<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>2 · Relance des contrats de maintenance</summary><div class="body">
+      <div class="prompt">Voici la liste des contrats de maintenance @contrats.xlsx et les bons d'intervention de l'année. Identifie : les contrats dont les visites prévues n'ont pas toutes été faites, les contrats arrivant à échéance dans les 60 jours, et les clients en dépannage répété qui n'ont PAS de contrat (à démarcher). Rédige un courrier de proposition de contrat pour ces derniers.<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>3 · Devis dépannage standardisés</summary><div class="body">
+      <div class="prompt">Voici 5 de mes derniers devis de dépannage. Crée un modèle de devis type (déplacement, main-d'œuvre, pièces, fluide au kg avec traçabilité mentionnée, TVA selon le cas) puis une compétence /devis-depannage qui me pose les questions clés (client, panne, équipement) et génère le devis au modèle.<button class="copy">Copier</button></div>
+    </div></details>
+  </div>
+
+  <!-- 10 Solaire -->
+  <div class="tabpanel" id="t-sol">
+    <p class="context">Études, devis, démarches Enedis/Consuel/mairie, suivi de production. Vos dossiers chantier et exports de monitoring sont la matière première.</p>
+    <div class="callout warn"><strong>Essai naïf d'abord</strong>Avant l'exercice 1, lancez tel quel : <em>« Fais le point sur les chantiers. »</em> Observez : signale-t-il les pièces manquantes (contrat OA, Consuel) ? Trie-t-il par urgence ? Puis lancez le prompt complet et comparez.</div>
+    <details class="exercise"><summary>1 · Suivi administratif des chantiers</summary><div class="body">
+      <div class="prompt">Parcours les dossiers chantier de ce répertoire et construis le tableau de suivi administratif : par chantier, où en sont la déclaration préalable mairie, la convention de raccordement Enedis, l'attestation Consuel et le contrat OA EDF (fait / en attente / manquant, avec dates). Trie par chantier le plus bloqué. C'est le tableau que je veux voir chaque lundi.<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>2 · Rapport de production client</summary><div class="body">
+      <div class="prompt">Voici l'export annuel de monitoring @production.csv et l'étude initiale @etude.pdf. Compare la production réelle au productible annoncé, mois par mois. Rédige un rapport client d'une page en langage simple : production, autoconsommation, économies estimées, et explication honnête de tout écart. Vérifie tes calculs.<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>3 · Contrôle d'un devis avant envoi</summary><div class="body">
+      <div class="prompt">Relis @devis-client.pdf avant envoi : mentions RGE QualiPV présentes, puissance et matériel cohérents avec l'étude @etude.pdf, prime à l'autoconsommation calculée au bon barème, TVA au bon taux selon la puissance, délais réalistes. Liste chaque problème avec sa correction proposée. Ne modifie pas le devis toi-même.<button class="copy">Copier</button></div>
+    </div></details>
+  </div>
+
+  <!-- 11 Admin -->
+  <div class="tabpanel" id="t-adm">
+    <p class="context">Saisie de factures, relances, classement, pré-paie, TVA. Vos PDF fournisseurs et exports comptables sont la matière première. À noter : la facturation électronique (Factur-X, PDP) arrive en 2026-2027 — vos process vont bouger.</p>
+    <div class="callout warn"><strong>Essai naïf d'abord</strong>Avant l'exercice 1, lancez tel quel : <em>« Saisis ces factures. »</em> Observez : vérifie-t-il que HT + TVA = TTC ? Que fait-il du scan illisible ? Puis lancez le prompt complet et comparez.</div>
+    <details class="exercise"><summary>1 · Pré-saisie des factures fournisseurs</summary><div class="body">
+      <div class="prompt">Voici un lot de factures fournisseurs PDF. Extrais pour chacune : fournisseur, numéro, date, HT, TVA (par taux), TTC, échéance. Construis le tableau de pré-saisie pour l'import dans Pennylane, vérifie que HT + TVA = TTC sur chaque ligne, et mets de côté les factures illisibles ou douteuses dans un sous-dossier a-verifier/.<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>2 · Campagne de relances sur balance âgée</summary><div class="body">
+      <div class="prompt">Voici la balance âgée d'un client @balance.xlsx. Prépare la campagne de relances : courrier niveau 1 (moins de 30 jours de retard), niveau 2 (30-60 j), mise en demeure (au-delà, avec mention des pénalités légales et de l'indemnité forfaitaire de 40 €). Un document par débiteur, plus un tableau récapitulatif de la campagne pour mon client.<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>3 · Classement d'une GED en vrac</summary><div class="body">
+      <div class="prompt">Ce dossier contient des mois de documents en vrac (factures, contrats, courriers, RIB, K-bis) pour plusieurs clients. Propose un plan de classement par client puis par nature, montre-le-moi, et après validation classe et renomme tout au format AAAA-MM-JJ-client-nature. Liste à part tout ce que tu n'as pas su classer.<button class="copy">Copier</button></div>
+    </div></details>
+  </div>
+
+  <!-- 12 Paie -->
+  <div class="tabpanel" id="t-pai">
+    <div class="callout warn"><strong>Données personnelles</strong>Les bulletins et la DSN contiennent des données sensibles (RGPD). Entraînez-vous sur des données fictives ou anonymisées, et ne traitez du réel que dans un cadre validé (offre Team/Enterprise, accord de vos clients). Claude contrôle et prépare — Silae et vous restez la chaîne de production.</div>
+    <div class="callout warn"><strong>Essai naïf d'abord</strong>Avant l'exercice 1, lancez tel quel : <em>« Vérifie les variables. »</em> Observez : compare-t-il avec le mois précédent ? Repère-t-il le salarié disparu, le doublon ? Puis lancez le prompt complet et comparez.</div>
+    <details class="exercise"><summary>1 · Contrôle des variables avant saisie</summary><div class="body">
+      <div class="prompt">Voici le tableau de variables du mois envoyé par le client @variables-mai.xlsx et celui du mois dernier. Avant que je saisisse dans Silae, signale tout ce qui mérite vérification : salarié présent le mois dernier et absent ce mois (sortie non signalée ?), heures supplémentaires inhabituelles, primes jamais vues, absences sans justificatif mentionné, matricules en double. Tableau des anomalies avec ta question pour le client à chaque ligne.<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>2 · Check-list d'entrée d'un salarié</summary><div class="body">
+      <div class="prompt">Voici les pièces reçues pour une embauche. Vérifie la complétude du dossier : contrat signé, DPAE, pièce d'identité, carte vitale/NIR, RIB, mutuelle (affiliation ou dispense ANI), visite d'information et de prévention planifiée. Construis la check-list conforme/manquant et rédige l'e-mail au client listant les pièces à fournir.<button class="copy">Copier</button></div>
+    </div></details>
+    <details class="exercise"><summary>3 · Tableau de bord des échéances sociales</summary><div class="body">
+      <div class="prompt">À partir de la liste de mes dossiers clients @portefeuille.xlsx (effectif, convention collective, dates de paie), construis mon tableau de bord mensuel : échéances DSN, dates limites de collecte des variables par client, arrêts maladie en cours à suivre, et soldes de tout compte à produire. Trie par urgence. Ce sera ensuite ma tâche planifiée du 1er du mois.<button class="copy">Copier</button></div>
+    </div></details>
+  </div>
+
+  <h3>Après chaque exercice — trois questions de réflexion</h3>
+  <div class="callout tip"><strong>À se poser systématiquement</strong>
+  1. Qu'avez-vous oublié de préciser — et qu'est-ce que Claude a supposé à votre place ?<br>
+  2. Comment avez-vous vérifié le résultat ? (un total recalculé, une pièce ouverte au hasard, une date recoupée)<br>
+  3. Que changeriez-vous dans votre prompt la prochaine fois — et mérite-t-il de devenir une /compétence ?</div>
+
+  <h3>Exercice de groupe — le tournoi de prompts (20-30 min)</h3>
+  <p>À faire à plusieurs, sur la <strong>même tâche</strong> avec les <strong>mêmes fichiers</strong> (prenez l'exercice 1 de votre onglet). Trois participants, trois approches :</p>
+  <table>
+    <tr><th>Approche</th><th>Consigne</th></tr>
+    <tr><td><strong>Minimale</strong></td><td>Le prompt le plus court qui pourrait marcher (1-2 phrases, comme l'essai naïf).</td></tr>
+    <tr><td><strong>Détaillée</strong></td><td>Un prompt complet appliquant les cinq règles de la leçon 4 (résultat, vérification, cible mesurable, forme).</td></tr>
+    <tr><td><strong>Conversationnelle</strong></td><td>Partir court, puis affiner par allers-retours : corriger, préciser, redemander.</td></tr>
+  </table>
+  <p>Comparez ensuite les trois résultats sur quatre critères : exactitude (les anomalies plantées ont-elles été trouvées ?), complétude, forme exploitable, nombre d'allers-retours nécessaires. Débattez : pourquoi l'un a-t-il mieux marché ? Il n'y a pas un style unique « correct » — la conversationnelle gagne souvent en exploration, la détaillée en production répétable. C'est la détaillée qu'on transforme en /compétence.</p>
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">J'ai participé à un tournoi de prompts et comparé les trois approches.</span></label>
+
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">J'ai réalisé au moins un exercice de mon métier sur mes propres fichiers (copies).</span></label>
+  <div class="quiz">
+    <p class="q">Après un exercice métier, quelle est la bonne réflexion systématique ?</p>
+    <button class="opt" data-r="1">Comment ai-je vérifié le résultat, et qu'est-ce que Claude a supposé à ma place ?</button>
+    <button class="opt" data-r="0">Aucune : si l'IA l'a produit, c'est forcément juste</button>
+    <button class="opt" data-r="0">Passer au suivant le plus vite possible</button>
+    <div class="explain">Un total recalculé, une pièce ouverte au hasard, une date recoupée : c'est vous qui restez le professionnel responsable. Et si le prompt est bon, faites-en une /compétence.</div>
+  </div>
+</section>
+
+<!-- ============ LEÇON 9 ============ -->
+<section class="lesson" id="l9" data-min="10">
+  <span class="lessonNum">Leçon 9</span>
+  <h2>Projet final : construisez-vous un outil</h2>
+  <p>Voici ce qui surprend tout le monde : Claude Code peut vous construire un petit logiciel qui fonctionne — sans que vous regardiez jamais le code. Un calculateur de devis avec vos vrais tarifs. Un formulaire d'accueil client. Un tableau de bord pour votre suivi de chantiers ou d'échéances. Décrivez-le ; Claude le construit en un seul fichier que vous ouvrez dans votre navigateur.</p>
+  <div class="prompt">Je veux un calculateur de devis en une seule page HTML que j'ouvre dans mon navigateur. Avant de construire quoi que ce soit, interroge-moi : pose-moi tes questions une par une (entrées du calcul, règles de prix, cas particuliers, présentation), propose-moi des options quand c'est possible, et résume la spécification pour validation. Construis seulement après mon accord, avec le nom de mon entreprise en haut, puis ouvre le résultat pour que je l'essaie.<button class="copy">Copier</button></div>
+  <p>Itérez comme avec une personne : <em>« agrandis le résultat », « ajoute une majoration urgence de 10 % », « permets de télécharger le devis en PDF ».</em></p>
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">J'ai construit un petit outil pour mon entreprise.</span></label>
+
+  <h3>Et maintenant ?</h3>
+  <ul>
+    <li><strong>Cette semaine :</strong> créez le CLAUDE.md d'un vrai dossier de travail. Une vraie tâche par jour.</li>
+    <li><strong>Ce mois-ci :</strong> transformez vos trois tâches les plus répétées en /compétences. Ajoutez une tâche planifiée. Connectez un outil — ou prenez le réflexe export pour vos logiciels métier.</li>
+    <li><strong>Pour aller plus loin :</strong> le cours vidéo gratuit <em>Claude Code in Action</em> sur <strong>anthropic.skilljar.com</strong> (en anglais), et la documentation sur <strong>code.claude.com/docs</strong>.</li>
+  </ul>
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">J'ai identifié mes trois tâches les plus répétées à automatiser en premier.</span></label>
+  <div class="quiz">
+    <p class="q">Pour que Claude vous construise un petit outil (calculateur de devis, formulaire), que devez-vous savoir faire ?</p>
+    <button class="opt" data-r="0">Lire et écrire du code vous-même</button>
+    <button class="opt" data-r="1">Rien de technique : vous le décrivez en français, puis vous itérez (« ajoute une majoration de 10 % »…)</button>
+    <button class="opt" data-r="0">Engager un développeur au préalable</button>
+    <div class="explain">Claude construit l'outil en un seul fichier que vous ouvrez dans le navigateur. Vous l'améliorez par allers-retours, sans jamais regarder le code.</div>
+  </div>
+</section>
+
+<!-- ============ SESSION 2 ============ -->
+<section class="lesson" id="s2" data-min="60">
+  <span class="lessonNum">Session 2 · optionnelle, séparée</span><span class="s2-badge sans">Aperçu de recherche</span>
+  <h2>Claude Code sur la route</h2>
+  <span id="progressLabel2" class="s2-progress sans">0 / 0 étapes</span>
+
+  <p>La Session 1 vous a appris à travailler <strong>avec</strong> Claude Code, assis devant votre ordinateur, en direct : vous discutez, vous regardez, vous validez. Cette session ajoute un second mode, complémentaire : <strong>déléguer une tâche depuis votre téléphone — par la voix ou en texte — puis vérifier le résultat plus tard</strong>, à votre poste. Entre deux rendez-vous, en sortant d'un site, en fin de journée.</p>
+  <p>Le principe ne change pas d'un mode à l'autre : vous décrivez ce que vous voulez, Claude travaille sur votre dossier, vous validez. Seul le moment où vous donnez l'instruction — et l'endroit où vous récupérez le résultat — change.</p>
+
+  <div class="callout warn"><strong>Aperçu de recherche</strong>La fonction qui permet de lancer une tâche depuis le téléphone (« Dispatch ») est un <strong>aperçu de recherche</strong> : son nom, son fonctionnement ou sa disponibilité peuvent changer. Si elle ne marche pas comme prévu le jour de votre session, ce n'est pas une erreur de votre part — passez en mode binôme (voir plus bas) et continuez.</div>
+
+  <h3>Prérequis — à faire chez vous avant la session</h3>
+  <p>Ces étapes sont en plus de l'installation de la Session 1 (qui reste nécessaire).</p>
+  <label class="check"><input type="checkbox" data-step2><span class="lbl sans">J'ai installé l'application Claude sur mon téléphone et je suis connecté avec le <strong>même compte</strong> que sur mon ordinateur.</span></label>
+  <label class="check"><input type="checkbox" data-step2><span class="lbl sans">J'ai appairé mon téléphone avec l'ordinateur qui fait tourner Claude Code (dans l'app mobile, onglet Code → suivre l'invite d'appairage).</span></label>
+  <label class="check"><input type="checkbox" data-step2><span class="lbl sans">Je sais que mon ordinateur doit rester allumé et accessible pour recevoir les tâches envoyées depuis le téléphone.</span></label>
+  <label class="check"><input type="checkbox" data-step2><span class="lbl sans">J'ai testé l'appairage une fois avant la session : envoyé une tâche simple depuis le téléphone (« dis-moi bonjour et donne l'heure ») et reçu une réponse.</span></label>
+
+  <h3>Exercice A — Dicter une tâche, la retrouver au retour</h3>
+  <p>Depuis votre téléphone, <strong>en dictant</strong> (jamais en tapant en conduisant), lancez cette tâche sur votre dossier d'exercices habituel (celui de votre métier, Session 1) :</p>
+  <div class="prompt">Dans mon dossier d'exercices, choisis un fichier qui te semble important (une facture, un contrat, un export) et dis-moi s'il contient quelque chose qui mérite vérification ou action de ma part. Écris ta réponse dans un fichier a-mon-retour.md, en 5 lignes maximum.<button class="copy">Copier</button></div>
+  <p>Continuez votre trajet ou votre rendez-vous. À votre retour, ouvrez <code>a-mon-retour.md</code> et appliquez le réflexe de la Session 1 : <strong>comment je vérifie ?</strong> Ouvrez le fichier source que Claude a cité et contrôlez ce qu'il avance.</p>
+  <label class="check"><input type="checkbox" data-step2><span class="lbl sans">J'ai dicté une tâche depuis mon téléphone et retrouvé le résultat à mon retour.</span></label>
+
+  <h3>Exercice B — Photo d'un document, tri immédiat</h3>
+  <p>Prenez en photo, avec votre téléphone, <strong>n'importe quel document de votre dossier d'exercices</strong> — affiché à l'écran ou imprimé : une facture, un bon, une fiche. Envoyez la photo à Claude avec :</p>
+  <div class="prompt">Cette photo correspond-elle à un document de mon dossier d'exercices ? Si oui, dis-moi lequel et signale les écarts éventuels entre la photo et le fichier. Si non, dis-moi de quoi il s'agit et où je devrais le ranger.<button class="copy">Copier</button></div>
+  <p>Même principe qu'avec un scanner — sauf que le scanner est dans votre poche. Utile pour un bon de livraison signé sur un chantier, une note manuscrite, un document reçu en papier sans passer par un scanner.</p>
+  <label class="check"><input type="checkbox" data-step2><span class="lbl sans">J'ai envoyé une photo d'un document et obtenu un tri ou une vérification.</span></label>
+
+  <h3>Vos outils de la Session 1 fonctionnent ici aussi</h3>
+  <p>C'est le même Claude Code, juste un autre appareil. Le <code>/demarrer</code> de votre dossier métier et toute <code>/compétence</code> que vous avez créée en leçon 6 (par exemple <code>/comparer-devis</code>) sont disponibles depuis le téléphone exactement comme depuis l'ordinateur. Rien à recréer.</p>
+
+  <h3>Trier vos e-mails et votre agenda</h3>
+  <p>Si vous avez connecté Gmail ou Google Drive avant la Session 1 (voir l'e-mail de pré-travail), la même connexion fonctionne depuis le téléphone :</p>
+  <div class="prompt">Regarde mes e-mails non lus de ce matin et dis-moi en une ligne chacun lesquels nécessitent une réponse aujourd'hui.<button class="copy">Copier</button></div>
+
+  <h3>Ce que vous ne ferez pas depuis le téléphone</h3>
+  <div class="callout warn"><strong>Limites assumées</strong>
+  <ul>
+    <li><strong>Pas de travail de fond</strong> : construire un tableau complexe, rédiger un document long — c'est pour votre poste, écran et clavier.</li>
+    <li><strong>Pas de relecture fine sur petit écran</strong> : si Claude vous propose d'envoyer un courrier ou de modifier un document, attendez d'être à votre poste pour relire avant validation — sauf urgence assumée.</li>
+    <li><strong>Données clients sensibles</strong> : même prudence qu'ailleurs (RGPD, secret professionnel selon votre métier) — et un téléphone se perd ou s'affiche en public plus facilement qu'un ordinateur.</li>
+  </ul>
+  </div>
+
+  <h3>Selon votre métier</h3>
+  <p>Quelques exemples de ce que « déléguer depuis la route » peut vouloir dire chez vous :</p>
+  <table>
+    <tr><th>Métier</th><th>Exemple</th></tr>
+    <tr><td>Nettoyage</td><td>Entre deux sites : « Vérifie si le client des Arcades a réglé la facture de mai. »</td></tr>
+    <tr><td>Communication BtoB</td><td>En sortant d'un rendez-vous, photo de vos notes manuscrites de brief → récapitulatif structuré.</td></tr>
+    <tr><td>Tourisme &amp; Vin</td><td>Le week-end, depuis le domaine : rappel des arrivées du jour et points de vigilance (taxe de séjour, infos manquantes).</td></tr>
+    <tr><td>Rénovation</td><td>Sur le chantier, photo d'un bon de livraison → comparaison avec le devis.</td></tr>
+    <tr><td>E-réputation</td><td>Entre deux clients : « Y a-t-il de nouveaux avis urgents à traiter ? »</td></tr>
+    <tr><td>Patrimoine</td><td>Dans la salle d'attente avant un RDV : récap du dossier client depuis le téléphone.</td></tr>
+    <tr><td>Avocat d'affaires</td><td>Dans les transports : « Vérifie le délai de préavis du dossier X. »</td></tr>
+    <tr><td>Courtage assurance</td><td>Entre deux visites, photo d'une déclaration de sinistre papier → mise en forme.</td></tr>
+    <tr><td>Froid / Clim / PAC</td><td>Sur site, photo d'un CERFA rempli à la main → vérification de cohérence avec l'intervention.</td></tr>
+    <tr><td>Solaire / EnR</td><td>Sur le toit : dicter l'avancement du chantier pour mise à jour du tableau de suivi.</td></tr>
+    <tr><td>Admin externalisé</td><td>En déplacement : « Où en sont les relances du client Y ? »</td></tr>
+    <tr><td>Paie</td><td>Avant le 1er du mois : « Rappelle-moi les échéances de collecte de variables de la semaine. »</td></tr>
+  </table>
+
+  <h3>Et ensuite ?</h3>
+  <p>Le réflexe à retenir : si une idée vous vient en dehors du bureau, ne la notez pas pour « plus tard » — dictez-la à Claude tout de suite, il s'en occupe pendant que vous continuez votre journée.</p>
+  <label class="check"><input type="checkbox" data-step2><span class="lbl sans">J'ai identifié une tâche réelle de mon quotidien que je pourrais déléguer depuis mon téléphone cette semaine.</span></label>
+  <div class="quiz">
+    <p class="q">Depuis le téléphone, qu'est-ce qui n'est PAS recommandé ?</p>
+    <button class="opt" data-r="0">Dicter une tâche courte entre deux rendez-vous</button>
+    <button class="opt" data-r="0">Photographier un document pour le faire trier</button>
+    <button class="opt" data-r="1">Lancer un travail de fond complexe et le valider sur le petit écran</button>
+    <div class="explain">Le travail de fond et la relecture fine sont pour votre poste — écran et clavier. Le téléphone sert à déléguer vite, puis à vérifier au retour.</div>
+  </div>
+</section>
+
+<section class="lesson" id="s3" data-min="120">
+  <span class="lessonNum">Session 3 · optionnelle, séparée</span>
+  <h2>Les agents : Claude qui travaille seul</h2>
+  <span id="progressLabel3" class="s2-progress sans">0 / 0 étapes</span>
+
+  <p>La Session 1 vous a appris à travailler <strong>avec</strong> Claude Code, en direct — vous pilotez chaque étape. La Session 2 a ajouté la délégation à distance depuis votre téléphone. Cette session introduit un troisième mode : <strong>confier à Claude une mission entière qu'il exécute seul, sans vous demander confirmation à chaque étape</strong>.</p>
+  <p>Un agent Claude Code, c'est un assistant auquel vous donnez un objectif, des outils et un contexte — et qui enchaîne lui-même les étapes pour l'atteindre. Comme un collaborateur à qui vous dites : <em>« Chaque lundi matin, vérifie les pointages, génère le tableau d'écarts et mets-le dans le dossier client. »</em> Il le fait. Sans que vous lui rappeliez le mode d'emploi à chaque fois.</p>
+
+  <h3>Ce qui change par rapport aux Sessions 1 et 2</h3>
+  <table>
+    <tr><th>Mode</th><th>Vous faites</th><th>Claude fait</th></tr>
+    <tr><td>Session 1 — interactif</td><td>Vous posez une question, vous lisez la réponse, vous posez la suivante.</td><td>Répond à chaque question, une à la fois.</td></tr>
+    <tr><td>Session 2 — délégation à distance</td><td>Vous lancez une tâche depuis votre téléphone, vous récupérez le résultat plus tard.</td><td>Exécute une tâche unique, vous rend la main.</td></tr>
+    <tr><td>Session 3 — agent autonome</td><td>Vous définissez une mission (une fois). Vous vérifiez les résultats.</td><td>Planifie, lit des fichiers, écrit, corrige, produit un livrable complet — sans interruption.</td></tr>
+  </table>
+
+  <div class="callout warn"><strong>Ce que les agents ne font pas seuls</strong>
+  <ul>
+    <li><strong>Envoyer des e-mails ou des messages</strong> : ils préparent les brouillons, vous envoyez.</li>
+    <li><strong>Modifier des données irréversibles</strong> : comptabilité validée, dossiers archivés — sauf demande explicite de votre part.</li>
+    <li><strong>Prendre des décisions à votre place</strong> : un agent signale, résume, propose. Vous décidez.</li>
+  </ul></div>
+
+  <h3>Comment un agent est construit</h3>
+  <p>Un agent Claude Code, c'est un fichier texte dans le dossier <code>.claude/agents/</code> de votre projet. Il contient trois choses :</p>
+  <ol>
+    <li><strong>Un nom et une description</strong> — ce que Claude lui délègue automatiquement.</li>
+    <li><strong>Les outils autorisés</strong> — lire des fichiers, écrire, chercher dans des dossiers, appeler des APIs.</li>
+    <li><strong>Des instructions</strong> — son mode opératoire, ses priorités, ses limites.</li>
+  </ol>
+  <p>Vous en avez déjà utilisé un sans le savoir : le personnage métier de vos dossiers d'exercices (leçon 8) était un agent. Il lisait vos fichiers et vous répondait en restant dans son rôle de client ou de partenaire critique.</p>
+
+  <h3>Exercice A — Créer votre premier agent métier</h3>
+  <p>Dans votre dossier d'exercices habituel (celui de votre métier, Session 1), demandez à Claude de créer un agent adapté à votre activité :</p>
+  <div class="prompt">Crée-moi un agent Claude Code dans .claude/agents/ pour mon dossier métier. Cet agent doit : (1) porter un nom explicite lié à mon activité, (2) avoir pour mission de parcourir les fichiers du dossier chaque lundi, identifier les tâches en retard ou les anomalies, et écrire un résumé dans un fichier synthese-semaine.md, (3) n'avoir que les droits de lecture et d'écriture de fichiers — aucun accès réseau. Montre-moi le fichier créé et explique chaque ligne.<button class="copy">Copier</button></div>
+  <p>Lisez attentivement le fichier que Claude a créé. Vous verrez la structure d'un agent : son nom, sa description, ses outils, ses instructions. C'est un fichier texte — vous pouvez le modifier comme n'importe quel autre document.</p>
+  <label class="check"><input type="checkbox" data-step3><span class="lbl sans">J'ai créé un fichier d'agent dans .claude/agents/ et je comprends sa structure.</span></label>
+
+  <h3>Exercice B — Lancer l'agent sur votre dossier</h3>
+  <p>Maintenant, demandez à Claude d'invoquer l'agent sur vos fichiers d'exercices :</p>
+  <div class="prompt">Lance l'agent que tu viens de créer sur ce dossier. Montre-moi les étapes qu'il suit, puis ouvre le fichier synthese-semaine.md qu'il a produit.<button class="copy">Copier</button></div>
+  <p>Appliquez le réflexe de la Session 1 : <strong>vérifiez au moins un point du résumé</strong> en ouvrant le fichier source cité par l'agent. Un agent qui fait 90 % du travail seul est plus utile qu'une liste de tâches que vous ne faites jamais — à condition de vérifier les 10 % restants.</p>
+  <label class="check"><input type="checkbox" data-step3><span class="lbl sans">J'ai lancé l'agent et vérifié au moins un résultat dans le fichier source correspondant.</span></label>
+
+  <h3>Exercice C — Transformer votre /compétence en agent</h3>
+  <p>En leçon 6a, vous avez transformé un prompt métier en <code>/compétence</code>. Un agent peut exécuter cette compétence automatiquement, sans que vous la lanciez à la main :</p>
+  <div class="prompt">Regarde la /compétence que j'ai créée en leçon 6 (ou propose celle qui conviendrait le mieux à mon activité). Crée un agent dans .claude/agents/ qui l'exécute automatiquement selon un déclencheur adapté à mon rythme de travail (hebdomadaire, mensuel, avant chaque RDV…). Donne-lui un nom explicite et explique-moi le déclencheur que tu as choisi.<button class="copy">Copier</button></div>
+  <label class="check"><input type="checkbox" data-step3><span class="lbl sans">J'ai identifié au moins une compétence que je déléguerais à un agent dans mon quotidien.</span></label>
+
+  <h3>Agents à sous-agents — aller plus loin</h3>
+  <p>Un agent peut lui-même déléguer à d'autres agents. C'est le mode <strong>multi-agent</strong> : un agent « chef de projet » confie des sous-tâches à des agents spécialisés — un pour lire les fichiers, un pour comparer les chiffres, un pour rédiger le résumé. Claude orchestre tout cela automatiquement si vous lui décrivez le résultat attendu.</p>
+  <div class="prompt">Je veux un système qui, chaque semaine : (1) lit tous les fichiers nouveaux ou modifiés dans ce dossier, (2) identifie ce qui nécessite une action urgente, (3) rédige un e-mail de synthèse que je n'ai plus qu'à relire et envoyer. Propose-moi comment organiser cela avec des agents — explique la structure avant de mettre quoi que ce soit en place.<button class="copy">Copier</button></div>
+  <p>Lisez la proposition avant d'approuver. Un bon agent, c'est une proposition que vous comprenez — pas une boîte noire.</p>
+
+  <h3>Selon votre métier</h3>
+  <p>Pour chaque secteur ci-dessous : l'agent prépare, vous validez.</p>
+  <table>
+    <tr><th>Métier</th><th>Agent</th><th>Ce qu'il fait seul</th></tr>
+    <tr><td>Nettoyage</td><td><code>controle-pointages</code></td><td>Compare pointages vs planning chaque lundi, génère le tableau d'écarts, liste les clients à relancer pour impayés.</td></tr>
+    <tr><td>Communication BtoB</td><td><code>suivi-livrables</code></td><td>Parcourt comptes-rendus et briefs, identifie les livrables en retard par client, génère un état d'avancement hebdomadaire.</td></tr>
+    <tr><td>Tourisme &amp; Vin</td><td><code>prep-arrivees</code></td><td>Lit le planning des réservations, liste les arrivées du lendemain, note les points de vigilance (taxe de séjour, allergies, groupes, informations manquantes).</td></tr>
+    <tr><td>Rénovation</td><td><code>suivi-chantiers</code></td><td>Compare devis et factures reçues, signale les dépassements, met à jour un tableau de bord par chantier.</td></tr>
+    <tr><td>E-réputation</td><td><code>veille-avis</code></td><td>Classe les nouveaux avis (positif / négatif / urgent), propose une réponse adaptée par catégorie, signale les crises à traiter dans les 24 h.</td></tr>
+    <tr><td>Patrimoine</td><td><code>prep-rendez-vous</code></td><td>Lit le dossier client avant chaque RDV, génère une fiche de synthèse : dernière situation, points ouverts, sujets à aborder.</td></tr>
+    <tr><td>Avocat d'affaires</td><td><code>veille-echeances</code></td><td>Parcourt les dossiers, liste les délais légaux approchant dans les 30 et 60 jours, produit une alerte hebdomadaire classée par urgence.</td></tr>
+    <tr><td>Courtage assurance</td><td><code>relances-echeances</code></td><td>Identifie les contrats expirant dans 60 jours, rédige un brouillon de renouvellement personnalisé par client.</td></tr>
+    <tr><td>Froid / Clim / PAC</td><td><code>planning-maintenance</code></td><td>Calcule les dates de maintenance préventive par équipement et client, génère les fiches d'intervention à valider avant envoi au technicien.</td></tr>
+    <tr><td>Solaire / EnR</td><td><code>suivi-production</code></td><td>Compare production réelle vs prévisionnelle par installation, signale les écarts &gt; 10 %, prépare un rapport client mensuel prêt à envoyer.</td></tr>
+    <tr><td>Admin externalisé</td><td><code>tri-entrants</code></td><td>Classe les nouveaux documents par client et par priorité, extrait les dates clés (échéances, paiements), génère la to-do du jour.</td></tr>
+    <tr><td>Paie</td><td><code>validation-variables</code></td><td>Vérifie que toutes les variables de paie sont reçues avant la date limite, signale les anomalies (heures hors norme, entrées/sorties), génère le rapport de contrôle avant traitement.</td></tr>
+  </table>
+
+  <h3>Vos outils des Sessions 1 et 2 fonctionnent ici aussi</h3>
+  <p>Un agent peut appeler vos <code>/compétences</code>, lire votre <code>CLAUDE.md</code> et accéder aux mêmes connecteurs (Gmail, Drive, etc.) que vous avez configurés en leçon 7. Vous ne recommencez rien — vous ajoutez une couche d'autonomie par-dessus ce que vous avez déjà construit.</p>
+
+  <h3>Et ensuite ?</h3>
+  <p>Le bon réflexe : identifiez la tâche que vous faites de façon répétitive et mécanique — la même chose chaque lundi, chaque fin de mois, avant chaque RDV. C'est là que les agents ont le plus d'impact. Commencez par un seul agent, sur une seule tâche, vérifiez son travail pendant deux semaines, puis ajoutez-en d'autres si la confiance est là.</p>
+  <label class="check"><input type="checkbox" data-step3><span class="lbl sans">J'ai identifié la tâche répétitive de mon quotidien que je confierai à un agent en premier.</span></label>
+  <div class="quiz">
+    <p class="q">Que ne fait jamais un agent autonome sans vous ?</p>
+    <button class="opt" data-r="0">Lire les fichiers du dossier et rédiger un résumé</button>
+    <button class="opt" data-r="1">Envoyer des e-mails ou modifier des données irréversibles à votre place</button>
+    <button class="opt" data-r="0">Repérer les anomalies et les signaler</button>
+    <div class="explain">L'agent prépare, vous validez : il rédige les brouillons, vous envoyez ; il signale et propose, vous décidez.</div>
+  </div>
+</section>
+</main>
+
+<footer class="sans">
+  Construit à partir de la documentation officielle Claude Code (code.claude.com/docs, juin 2026). Les cases de progression se réinitialisent à la fermeture de la page. Les exercices métier sont des points de départ : adaptez-les à vos documents et vérifiez toujours les résultats — en particulier les chiffres et les obligations réglementaires.
+</footer>
+
+<script>
+(function(){
+  // Suivi de progression
+  var steps = document.querySelectorAll('input[data-step]');
+  var label = document.getElementById('progressLabel');
+  var bar = document.getElementById('progressBar');
+  function update(){
+    var done = 0;
+    steps.forEach(function(s){ if(s.checked) done++; s.closest('.check').classList.toggle('done', s.checked); });
+    label.textContent = done + ' / ' + steps.length + ' étapes';
+    bar.style.width = (100*done/steps.length) + '%';
+  }
+  steps.forEach(function(s){ s.addEventListener('change', update); });
+  update();
+
+  // Suivi de progression — Session 2 (compteur séparé, n'affecte pas la Session 1)
+  var steps2 = document.querySelectorAll('input[data-step2]');
+  var label2 = document.getElementById('progressLabel2');
+  if(label2 && steps2.length){
+    function update2(){
+      var done2 = 0;
+      steps2.forEach(function(s){ if(s.checked) done2++; s.closest('.check').classList.toggle('done', s.checked); });
+      label2.textContent = done2 + ' / ' + steps2.length + ' étapes';
+    }
+    steps2.forEach(function(s){ s.addEventListener('change', update2); });
+    update2();
+  }
+  // Suivi de progression — Session 3
+  var steps3 = document.querySelectorAll('input[data-step3]');
+  var label3 = document.getElementById('progressLabel3');
+  if(label3 && steps3.length){
+    function update3(){
+      var done3 = 0;
+      steps3.forEach(function(s){ if(s.checked) done3++; s.closest('.check').classList.toggle('done', s.checked); });
+      label3.textContent = done3 + ' / ' + steps3.length + ' étapes';
+    }
+    steps3.forEach(function(s){ s.addEventListener('change', update3); });
+    update3();
+  }
+
+  // Boutons copier
+  document.querySelectorAll('.prompt').forEach(function(p){
+    var btn = p.querySelector('button.copy');
+    btn.addEventListener('click', function(){
+      var text = p.cloneNode(true);
+      text.querySelector('button.copy').remove();
+      navigator.clipboard.writeText(text.textContent.trim()).then(function(){
+        btn.textContent = 'Copié ✓';
+        setTimeout(function(){ btn.textContent = 'Copier'; }, 1500);
+      });
+    });
+  });
+
+  // Onglets
+  var tabs = document.querySelectorAll('.tabs button');
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){
+      tabs.forEach(function(x){ x.classList.remove('active'); });
+      document.querySelectorAll('.tabpanel').forEach(function(x){ x.classList.remove('active'); });
+      t.classList.add('active');
+      document.getElementById(t.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Quiz
+  document.querySelectorAll('.quiz').forEach(function(q){
+    var opts = q.querySelectorAll('button.opt');
+    opts.forEach(function(o){
+      o.addEventListener('click', function(){
+        opts.forEach(function(x){
+          x.classList.remove('right','wrong');
+          if(x.dataset.r === '1') x.classList.add('right');
+        });
+        if(o.dataset.r !== '1') o.classList.add('wrong');
+        q.querySelector('.explain').style.display = 'block';
+      });
+    });
+  });
+
+  // Sélecteur de thème (5 thèmes : 2 clairs, 3 sombres)
+  (function(){
+    var THEMES = [
+      { id:'midnight', name:'Minuit', dark:true },
+      { id:'ocean',    name:'Océan',  dark:true }
+    ];
+    var byId = {}; THEMES.forEach(function(t){ byId[t.id] = t; });
+    var swatches = document.querySelectorAll('.theme-swatch');
+    var btn = document.getElementById('themeToggle');
+    var ico = btn && btn.querySelector('.ico'), lbl = btn && btn.querySelector('.lbl');
+
+    function current(){
+      var v = document.documentElement.getAttribute('data-theme');
+      return byId[v] ? v : 'midnight';
+    }
+    function render(){
+      var id = current(), t = byId[id];
+      swatches.forEach(function(s){ s.classList.toggle('active', s.getAttribute('data-set-theme') === id); });
+      if(btn){
+        ico.textContent = t.dark ? '🌙' : '☀️';
+        lbl.textContent = t.name;
+        btn.title = 'Thème : ' + t.name + ' — cliquer pour le suivant';
+      }
+    }
+    function setTheme(id){
+      if(!byId[id]) return;
+      document.documentElement.setAttribute('data-theme', id);
+      try{ localStorage.setItem('tutoTheme', id); }catch(e){}
+      render();
+    }
+    swatches.forEach(function(s){
+      s.addEventListener('click', function(){ setTheme(s.getAttribute('data-set-theme')); });
+    });
+    if(btn){
+      btn.addEventListener('click', function(){
+        var ids = THEMES.map(function(t){ return t.id; });
+        setTheme(ids[(ids.indexOf(current()) + 1) % ids.length]);
+      });
+    }
+    render();
+  })();
+
+  // Lecture à voix haute — TTS via le navigateur (Web Speech API)
+  (function(){
+    if(!('speechSynthesis' in window)) return;
+    var synth = window.speechSynthesis;
+    var current = null;            // { el, btn }
+    var frVoice = null;
+    function pickVoice(){
+      var vs = synth.getVoices();
+      frVoice = vs.filter(function(v){ return /^fr-FR/i.test(v.lang); })[0]
+             || vs.filter(function(v){ return /^fr/i.test(v.lang); })[0]
+             || null;
+    }
+    pickVoice();
+    synth.addEventListener && synth.addEventListener('voiceschanged', pickVoice);
+
+    function stop(){
+      synth.cancel();
+      if(current){
+        current.btn.classList.remove('speaking');
+        current.btn.textContent = '🔊';
+        current.el.classList.remove('tts-reading');
+        current = null;
+      }
+    }
+    function speak(el, btn){
+      var same = current && current.el === el;
+      stop();
+      if(same) return;                       // re-clic = arrêt
+      var u = new SpeechSynthesisUtterance(el.dataset.ttsText);
+      u.lang = 'fr-FR';
+      if(frVoice) u.voice = frVoice;
+      u.rate = 1; u.pitch = 1;
+      u.onend = u.onerror = function(){ if(current && current.el === el) stop(); };
+      current = { el: el, btn: btn };
+      btn.classList.add('speaking'); btn.textContent = '⏹';
+      el.classList.add('tts-reading');
+      synth.speak(u);
+    }
+
+    var sel = 'main p, main li, main h2, main h3, main .callout, main .quiz p.q';
+    document.querySelectorAll(sel).forEach(function(el){
+      if(el.closest('.prompt')) return;      // les prompts sont des commandes à taper
+      if(el.querySelector('.tts-btn')) return;
+      var txt = el.textContent.replace(/\s+/g,' ').trim();
+      if(txt.length < 12) return;
+      el.dataset.ttsText = txt;
+      el.classList.add('tts-host');
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'tts-btn'; b.textContent = '🔊';
+      b.title = 'Lire ce passage à voix haute'; b.setAttribute('aria-label','Lire à voix haute');
+      b.addEventListener('click', function(e){ e.stopPropagation(); e.preventDefault(); speak(el, b); });
+      el.insertBefore(b, el.firstChild);
+    });
+
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') stop(); });
+    window.addEventListener('beforeunload', function(){ synth.cancel(); });
+  })();
+
+  // Minuteur de section — durée conseillée + compte à rebours (un seul actif à la fois)
+  (function(){
+    var timers = [];
+    function beep(){
+      try{
+        var Ctx = window.AudioContext || window.webkitAudioContext;
+        if(!Ctx) return;
+        var ctx = new Ctx(), o = ctx.createOscillator(), g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination);
+        o.type = 'sine'; o.frequency.value = 880;
+        g.gain.setValueAtTime(0.0001, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.25, ctx.currentTime + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.6);
+        o.start(); o.stop(ctx.currentTime + 0.62);
+      }catch(e){}
+    }
+    function fmt(sec){
+      var s = Math.abs(sec), m = Math.floor(s/60), r = s%60;
+      return (sec<0?'+':'') + m + ':' + (r<10?'0':'') + r;
+    }
+    document.querySelectorAll('section.lesson[data-min]').forEach(function(sec){
+      var min = parseInt(sec.getAttribute('data-min'), 10);
+      if(!min || min < 1) return;
+      var total = min*60;
+
+      var box = document.createElement('div');
+      box.className = 'lesson-timer';
+      box.innerHTML =
+        '<span class="lt-suggest">⏱ Durée conseillée : ' + min + ' min</span>' +
+        '<span class="lt-display">' + fmt(total) + '</span>' +
+        '<button type="button" class="lt-btn lt-start">Démarrer</button>' +
+        '<button type="button" class="lt-btn lt-reset">Réinit.</button>';
+
+      var h2 = sec.querySelector('h2');
+      h2.parentNode.insertBefore(box, h2.nextSibling);
+
+      var disp = box.querySelector('.lt-display');
+      var startBtn = box.querySelector('.lt-start');
+      var resetBtn = box.querySelector('.lt-reset');
+
+      var remaining = total, id = null, beeped = false;
+
+      function paint(){
+        disp.textContent = fmt(remaining);
+        disp.classList.toggle('overtime', remaining < 0);
+      }
+      function stop(){
+        if(id){ clearInterval(id); id = null; }
+        startBtn.classList.remove('running');
+        sec.classList.remove('timing');
+        startBtn.textContent = (remaining === total) ? 'Démarrer'
+                              : (remaining <= 0 ? 'Continuer' : 'Reprendre');
+      }
+      function tick(){
+        remaining--;
+        if(remaining === 0 && !beeped){ beeped = true; beep(); }
+        paint();
+      }
+      function start(){
+        timers.forEach(function(t){ if(t !== ctrl) t.stop(); });
+        if(id) return;
+        id = setInterval(tick, 1000);
+        startBtn.classList.add('running');
+        sec.classList.add('timing');
+        startBtn.textContent = 'Pause';
+      }
+      var ctrl = { stop: stop };
+      timers.push(ctrl);
+
+      startBtn.addEventListener('click', function(){ id ? stop() : start(); });
+      resetBtn.addEventListener('click', function(){
+        stop(); remaining = total; beeped = false; paint();
+        startBtn.textContent = 'Démarrer';
+      });
+      paint();
+    });
+  })();
+
+  // Tableau (chalkboard) infini & persistant — touche B
+  (function(){
+    var COLORS = ['#f7f5ee', '#ffe66d', '#f59563', '#8fe3b0', '#ff9aa2', '#7ec8ff'];
+    var PEN_W = 4, ERASER_W = 30, STORE = 'tutoChalkboard';
+
+    var board = document.createElement('div'); board.id = 'chalkboard';
+    var canvas = document.createElement('canvas'); board.appendChild(canvas);
+    var tools = document.createElement('div'); tools.id = 'cb-tools';
+    board.appendChild(tools);
+    document.body.appendChild(board);
+    var ctx = canvas.getContext('2d');
+
+    var color = COLORS[0], eraser = false, strokes = [], cur = null;
+    var drawing = false, isOpen = false;
+    var view = { x: 0, y: 0, scale: 1 };            // monde au coin haut-gauche + zoom
+    var panMode = false, spaceHeld = false, panning = false, panStart = null;
+    var clearedBackup = null, saveTimer = null;
+    loadState();
+
+    // ---- Barre d'outils ----
+    var swatches = [];
+    COLORS.forEach(function(c){
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'cb-color'; b.style.background = c;
+      b.title = 'Craie ' + c;
+      b.addEventListener('click', function(){ setColor(c); });
+      tools.appendChild(b); swatches.push(b);
+    });
+    tools.appendChild(sep());
+    var penBtn = btn('Stylo', 'P', function(){ eraser = false; panMode = false; syncTools(); });
+    var eraBtn = btn('Gomme', 'E', function(){ eraser = true; panMode = false; syncTools(); });
+    var handBtn = btn('Main', 'H', function(){ setPan(!panMode); });
+    tools.appendChild(penBtn); tools.appendChild(eraBtn); tools.appendChild(handBtn);
+    tools.appendChild(sep());
+    tools.appendChild(btn('Zoom +', '+', function(){ zoomAt(window.innerWidth/2, window.innerHeight/2, 1.2); }));
+    tools.appendChild(btn('Zoom −', '−', function(){ zoomAt(window.innerWidth/2, window.innerHeight/2, 1/1.2); }));
+    tools.appendChild(btn('Recentrer', '0', resetView));
+    tools.appendChild(sep());
+    tools.appendChild(btn('Annuler', 'U', undo));
+    tools.appendChild(btn('Tout effacer', 'C', clearAll));
+    tools.appendChild(sep());
+    tools.appendChild(btn('Fermer', 'B', close));
+    var hint = document.createElement('span');
+    hint.className = 'cb-hint';
+    hint.textContent = 'Glisser : dessiner · molette : défiler · Ctrl+molette : zoom · Espace : déplacer';
+    tools.appendChild(hint);
+
+    function btn(label, key, fn){
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'cb-btn'; b.textContent = label;
+      b.title = label + (key ? ' (' + key + ')' : '');
+      if(key){ var s = document.createElement('span'); s.className = 'cb-key'; s.textContent = key; b.appendChild(s); }
+      b.addEventListener('click', fn); return b;
+    }
+    function sep(){ var s = document.createElement('span'); s.className = 'cb-sep'; return s; }
+    function setColor(c){ color = c; eraser = false; panMode = false; syncTools(); }
+    function setPan(on){ panMode = on; syncTools(); }
+    function syncTools(){
+      swatches.forEach(function(b, i){ b.classList.toggle('active', !eraser && !panMode && COLORS[i] === color); });
+      penBtn.classList.toggle('active', !eraser && !panMode);
+      eraBtn.classList.toggle('active', eraser && !panMode);
+      handBtn.classList.toggle('active', panMode);
+      updateCursor();
+    }
+    function updateCursor(){
+      canvas.style.cursor = panning ? 'grabbing' : ((panMode || spaceHeld) ? 'grab' : 'crosshair');
+    }
+    syncTools();
+
+    // ---- Repère monde <-> écran ----
+    function setWorldTransform(){
+      var dpr = window.devicePixelRatio || 1, s = view.scale * dpr;
+      ctx.setTransform(s, 0, 0, s, -view.x * s, -view.y * s);
+    }
+    function screenToWorld(e){
+      return { x: view.x + e.clientX / view.scale, y: view.y + e.clientY / view.scale };
+    }
+    function clamp(v, lo, hi){ return v < lo ? lo : (v > hi ? hi : v); }
+
+    // ---- Dessin ----
+    function styleFor(s){
+      ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.lineWidth = s.width;
+      if(s.erase){ ctx.globalCompositeOperation = 'destination-out'; ctx.strokeStyle = 'rgba(0,0,0,1)'; ctx.globalAlpha = 1; }
+      else { ctx.globalCompositeOperation = 'source-over'; ctx.strokeStyle = s.color; ctx.globalAlpha = 0.95; }
+    }
+    function drawStroke(s){
+      var p = s.points; if(!p.length) return;
+      ctx.save(); styleFor(s); ctx.beginPath(); ctx.moveTo(p[0].x, p[0].y);
+      for(var i = 1; i < p.length; i++) ctx.lineTo(p[i].x, p[i].y);
+      if(p.length === 1) ctx.lineTo(p[0].x + 0.1, p[0].y + 0.1);
+      ctx.stroke(); ctx.restore();
+    }
+    function drawSegment(s){
+      var p = s.points, n = p.length; if(n < 2){ drawStroke(s); return; }
+      ctx.save(); styleFor(s); ctx.beginPath();
+      ctx.moveTo(p[n-2].x, p[n-2].y); ctx.lineTo(p[n-1].x, p[n-1].y);
+      ctx.stroke(); ctx.restore();
+    }
+    function drawGrid(){
+      var stepW = 36 / view.scale;
+      var W = window.innerWidth / view.scale, H = window.innerHeight / view.scale;
+      var x0 = Math.ceil(view.x / stepW) * stepW, y0 = Math.ceil(view.y / stepW) * stepW;
+      var d = 1.4 / view.scale;
+      ctx.save();
+      ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+      ctx.fillStyle = 'rgba(255,255,255,0.06)';
+      for(var x = x0; x < view.x + W; x += stepW)
+        for(var y = y0; y < view.y + H; y += stepW)
+          ctx.fillRect(x, y, d, d);
+      ctx.restore();
+    }
+    function clearDevice(){
+      ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.restore();
+    }
+    function redraw(){ clearDevice(); setWorldTransform(); drawGrid(); strokes.forEach(drawStroke); }
+
+    function resize(){
+      var dpr = window.devicePixelRatio || 1, w = window.innerWidth, h = window.innerHeight;
+      canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+      canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+      redraw();
+    }
+
+    function undo(){
+      if(!strokes.length && clearedBackup){ strokes = clearedBackup; clearedBackup = null; }
+      else { strokes.pop(); }
+      redraw(); saveState();
+    }
+    function clearAll(){
+      if(!strokes.length) return;
+      clearedBackup = strokes.slice();   // « Annuler » restaure une fois après un effacement
+      strokes = []; redraw(); saveState();
+    }
+
+    // ---- Déplacement & zoom ----
+    function zoomAt(cx, cy, factor){
+      var wx = view.x + cx / view.scale, wy = view.y + cy / view.scale;
+      view.scale = clamp(view.scale * factor, 0.2, 6);
+      view.x = wx - cx / view.scale; view.y = wy - cy / view.scale;
+      redraw(); saveThrottled();
+    }
+    function resetView(){
+      if(!strokes.length){ view = { x: 0, y: 0, scale: 1 }; redraw(); saveState(); return; }
+      var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+      strokes.forEach(function(s){ s.points.forEach(function(p){
+        if(p.x < minX) minX = p.x; if(p.y < minY) minY = p.y;
+        if(p.x > maxX) maxX = p.x; if(p.y > maxY) maxY = p.y;
+      }); });
+      var pad = 60; minX -= pad; minY -= pad; maxX += pad; maxY += pad;
+      var W = window.innerWidth, H = window.innerHeight;
+      var s = clamp(Math.min(W / (maxX - minX), H / (maxY - minY)), 0.2, 2);
+      view.scale = s;
+      view.x = minX - (W / s - (maxX - minX)) / 2;
+      view.y = minY - (H / s - (maxY - minY)) / 2;
+      redraw(); saveState();
+    }
+
+    // ---- Persistance (localStorage) ----
+    function flat(points){ var a = []; for(var i = 0; i < points.length; i++) a.push(Math.round(points[i].x), Math.round(points[i].y)); return a; }
+    function saveState(){
+      try{
+        localStorage.setItem(STORE, JSON.stringify({
+          v: 1, view: view,
+          strokes: strokes.map(function(s){ return { c: s.color, w: s.width, e: s.erase ? 1 : 0, p: flat(s.points) }; })
+        }));
+      }catch(e){}
+    }
+    function saveThrottled(){ if(saveTimer) return; saveTimer = setTimeout(function(){ saveTimer = null; saveState(); }, 400); }
+    function loadState(){
+      try{
+        var raw = localStorage.getItem(STORE); if(!raw) return;
+        var d = JSON.parse(raw); if(!d) return;
+        if(d.view && typeof d.view.scale === 'number') view = d.view;
+        if(Array.isArray(d.strokes)){
+          strokes = d.strokes.map(function(s){
+            var pts = [], p = s.p || [];
+            for(var i = 0; i + 1 < p.length; i += 2) pts.push({ x: p[i], y: p[i+1] });
+            return { color: s.c, width: s.w, erase: !!s.e, points: pts };
+          });
+        }
+      }catch(e){}
+    }
+
+    // ---- Entrées pointeur ----
+    function isPanGesture(e){ return panMode || spaceHeld || e.button === 1 || e.button === 2; }
+    canvas.addEventListener('contextmenu', function(e){ if(isOpen) e.preventDefault(); });
+    canvas.addEventListener('pointerdown', function(e){
+      e.preventDefault();
+      try{ canvas.setPointerCapture(e.pointerId); }catch(_){}
+      if(isPanGesture(e)){
+        panning = true; panStart = { sx: e.clientX, sy: e.clientY, vx: view.x, vy: view.y };
+        updateCursor(); return;
+      }
+      drawing = true;
+      cur = { color: color, width: eraser ? ERASER_W : PEN_W, erase: eraser, points: [screenToWorld(e)] };
+      strokes.push(cur); drawStroke(cur);
+    });
+    canvas.addEventListener('pointermove', function(e){
+      if(panning){
+        view.x = panStart.vx - (e.clientX - panStart.sx) / view.scale;
+        view.y = panStart.vy - (e.clientY - panStart.sy) / view.scale;
+        redraw(); return;
+      }
+      if(!drawing || !cur) return;
+      e.preventDefault(); cur.points.push(screenToWorld(e)); drawSegment(cur);
+    });
+    function endStroke(){
+      if(panning){ panning = false; updateCursor(); saveState(); return; }
+      if(drawing){ drawing = false; cur = null; saveState(); }
+    }
+    canvas.addEventListener('pointerup', endStroke);
+    canvas.addEventListener('pointercancel', endStroke);
+    canvas.addEventListener('wheel', function(e){
+      if(!isOpen) return;
+      e.preventDefault();
+      if(e.ctrlKey || e.metaKey){ zoomAt(e.clientX, e.clientY, Math.exp(-e.deltaY * 0.0015)); }
+      else { view.x += e.deltaX / view.scale; view.y += e.deltaY / view.scale; redraw(); saveThrottled(); }
+    }, { passive: false });
+
+    // ---- Ouverture / fermeture ----
+    function open(){
+      if(isOpen) return;
+      isOpen = true; board.classList.add('open');
+      document.documentElement.style.overflow = 'hidden';
+      window.addEventListener('resize', resize);
+      resize(); updateCursor();
+    }
+    function close(){
+      if(!isOpen) return;
+      isOpen = false; board.classList.remove('open');
+      document.documentElement.style.overflow = '';
+      window.removeEventListener('resize', resize);
+      saveState();
+    }
+    function toggle(){ isOpen ? close() : open(); }
+
+    document.addEventListener('keydown', function(e){
+      if(e.ctrlKey || e.metaKey || e.altKey) return;
+      var t = e.target, tag = (t && t.tagName || '').toLowerCase();
+      if(tag === 'input' || tag === 'textarea' || (t && t.isContentEditable)) return;
+      var k = e.key.toLowerCase();
+      if(k === 'b'){ e.preventDefault(); toggle(); return; }
+      if(!isOpen) return;
+      if(e.key === 'Escape'){ close(); }
+      else if(e.key === ' '){ e.preventDefault(); if(!spaceHeld){ spaceHeld = true; updateCursor(); } }
+      else if(k === 'p'){ eraser = false; panMode = false; syncTools(); }
+      else if(k === 'e'){ eraser = true; panMode = false; syncTools(); }
+      else if(k === 'h'){ setPan(!panMode); }
+      else if(k === 'c'){ clearAll(); }
+      else if(k === 'u'){ undo(); }
+      else if(k === '0'){ resetView(); }
+      else if(e.key === '+' || e.key === '='){ zoomAt(window.innerWidth/2, window.innerHeight/2, 1.2); }
+      else if(e.key === '-' || e.key === '_'){ zoomAt(window.innerWidth/2, window.innerHeight/2, 1/1.2); }
+    });
+    document.addEventListener('keyup', function(e){
+      if(e.key === ' '){ spaceHeld = false; updateCursor(); }
+    });
+  })();
+
+  // Interroger un participant au hasard (cold-call équitable)
+  (function(){
+    var STORE = 'tutoParticipants';
+    var input = document.getElementById('ccNames');
+    var countEl = document.getElementById('ccCount');
+    if(!input) return;
+
+    var remaining = [], roundSize = 0, spinTimer = null;
+
+    var ov = document.createElement('div'); ov.id = 'cc-reveal';
+    ov.innerHTML = '<div class="cc-card">'
+      + '<div class="cc-toplabel">Au tableau&nbsp;!</div>'
+      + '<div class="cc-name" id="ccName">—</div>'
+      + '<div class="cc-round" id="ccRound"></div>'
+      + '<div class="cc-actions">'
+      + '<button type="button" class="cc-btn primary" id="ccAgain">Interroger un autre</button>'
+      + '<button type="button" class="cc-btn" id="ccClose">Fermer</button>'
+      + '</div></div>';
+    document.body.appendChild(ov);
+    var nameEl = ov.querySelector('#ccName'), roundEl = ov.querySelector('#ccRound');
+
+    function names(){ return input.value.split(',').map(function(s){ return s.trim(); }).filter(Boolean); }
+    function save(){ try{ localStorage.setItem(STORE, input.value); }catch(e){} }
+    function load(){ try{ var v = localStorage.getItem(STORE); if(v != null) input.value = v; }catch(e){} }
+    function newRound(){ remaining = names().slice(); roundSize = remaining.length; updateCount(); }
+    function updateCount(){
+      var n = names().length;
+      if(!n){ countEl.textContent = 'Aucun participant pour l’instant — ajoutez des prénoms ci-dessus.'; return; }
+      var done = roundSize ? (roundSize - remaining.length) : 0;
+      countEl.textContent = n + ' participant' + (n>1?'s':'') + ' · ' + done + ' interrogé' + (done>1?'s':'') + ' ce tour.';
+    }
+    function pick(){
+      var all = names(); if(!all.length) return null;
+      if(!remaining.length){ remaining = all.slice(); roundSize = all.length; }
+      var chosen = remaining.splice(Math.floor(Math.random()*remaining.length), 1)[0];
+      updateCount(); return chosen;
+    }
+    function openOv(){ ov.classList.add('open'); }
+    function closeOv(){ ov.classList.remove('open'); if(spinTimer){ clearInterval(spinTimer); spinTimer = null; } }
+    function reveal(){
+      var all = names();
+      if(!all.length){
+        nameEl.classList.remove('spinning'); nameEl.textContent = 'Ajoutez des prénoms en haut de page';
+        roundEl.textContent = ''; openOv();
+        try{ input.focus(); input.scrollIntoView({ behavior:'smooth', block:'center' }); }catch(e){}
+        return;
+      }
+      var chosen = pick();
+      openOv();
+      if(spinTimer) clearInterval(spinTimer);
+      nameEl.classList.add('spinning'); roundEl.textContent = '';
+      var ticks = 14, t = 0;
+      spinTimer = setInterval(function(){
+        nameEl.textContent = all[Math.floor(Math.random()*all.length)];
+        if(++t >= ticks){
+          clearInterval(spinTimer); spinTimer = null;
+          nameEl.classList.remove('spinning');
+          nameEl.textContent = chosen + ' !';
+          roundEl.textContent = remaining.length ? '' : 'Tour complet — tout le monde est passé une fois.';
+        }
+      }, 60);
+    }
+
+    load(); newRound();
+    input.addEventListener('input', function(){ save(); newRound(); });
+    document.getElementById('ccPick').addEventListener('click', reveal);
+    document.getElementById('ccReset').addEventListener('click', newRound);
+    ov.querySelector('#ccAgain').addEventListener('click', reveal);
+    ov.querySelector('#ccClose').addEventListener('click', closeOv);
+    ov.addEventListener('click', function(e){ if(e.target === ov) closeOv(); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && ov.classList.contains('open')) closeOv(); });
+
+    var callBtn = document.getElementById('callBtn');
+    if(callBtn) callBtn.addEventListener('click', reveal);
+
+    document.querySelectorAll('.quiz').forEach(function(q){
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'cc-quiz-btn'; b.textContent = '🎤 Interroger un participant';
+      b.addEventListener('click', reveal);
+      q.appendChild(b);
+    });
+  })();
+})();
+</script>
+</body>
+</html>
