@@ -11,7 +11,7 @@ Parcourir les dossiers chantiers actifs : pour chaque chantier, comparer le mont
 ## Fichiers à lire
 
 - devis/ — devis signés par chantier
-- situations/ ou actures/ — situations de travaux et factures
+- situations/ ou factures/ — situations de travaux et factures
 - sous-traitants.csv ou équivalent — numéros RGE et dates d'expiration
 
 ## Format de sortie

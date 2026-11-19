@@ -30,3 +30,10 @@ vous apprend (leçon 4 : les cinq règles).
 - À la fin d'un exercice, demandez la critique du personnage « Gestionnaire de la SCI Les Arcades »
   (sous-agent `client-sci-arcades`) : il relit votre production comme dans la vraie vie.
 - Le décor est posé dans `CONTEXTE-ENTREPRISE.md`.
+
+## Mission finale (si vous avez fini en avance)
+
+Il est vendredi 17 h 30. Lundi matin, vous faites le point avec votre responsable d'exploitation : tout doit être prêt. En **une seule demande** à Claude,
+faites produire dans un dossier `point-lundi/` : le tableau des écarts planning/pointages par site et par agent, les courriers de relance prêts à signer (gradués selon le retard), et le registre FDS avec les fiches à redemander en évidence.
+Critère de réussite : les trois livrables sont cohérents entre eux, chaque affirmation cite sa
+source, et vous avez vérifié au moins un chiffre de chaque livrable avant de « l'envoyer ».

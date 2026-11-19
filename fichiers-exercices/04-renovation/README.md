@@ -30,3 +30,10 @@ vous apprend (leçon 4 : les cinq règles).
 - À la fin d'un exercice, demandez la critique du personnage « Conducteur de travaux senior »
   (sous-agent `conducteur-travaux`) : il relit votre production comme dans la vraie vie.
 - Le décor est posé dans `CONTEXTE-ENTREPRISE.md`.
+
+## Mission finale (si vous avez fini en avance)
+
+Il est vendredi 17 h 30. Réunion avec le client Martin lundi : tout doit être prêt. En **une seule demande** à Claude,
+faites produire dans un dossier `reunion-martin/` : la liste des pièces MaPrimeRénov' à corriger, le comparatif des trois devis avec recommandation motivée, et la situation n° 3 vérifiée (Excel + PDF).
+Critère de réussite : les trois livrables sont cohérents entre eux, chaque affirmation cite sa
+source, et vous avez vérifié au moins un chiffre de chaque livrable avant de « l'envoyer ».

@@ -30,3 +30,18 @@ vous apprend (leçon 4 : les cinq règles).
 - À la fin d'un exercice, demandez la critique du personnage « Responsable contrôle interne / conformité »
   (sous-agent `controle-interne`) : il relit votre production comme dans la vraie vie.
 - Le décor est posé dans `CONTEXTE-ENTREPRISE.md`.
+
+## Mission finale (si vous avez fini en avance)
+
+Il est vendredi 17 h 30. RDV avec le Client A jeudi : tout doit être prêt. En **une seule demande** à Claude,
+faites produire dans un dossier `dossier-rdv/` : la fiche de RDV, le tableau conforme/manquant/périmé des pièces réglementaires, la synthèse T1 et la liste des questions à poser au client.
+Critère de réussite : les trois livrables sont cohérents entre eux, chaque affirmation cite sa
+source, et vous avez vérifié au moins un chiffre de chaque livrable avant de « l'envoyer ».
+
+## Bonus RGPD — anonymiser avant de travailler
+
+Réflexe à prendre avant tout fichier nominatif réel. Essayez ici sur `emails-recents.txt (dossier-client-A/)` :
+« Crée une copie anonymisée de ce fichier : remplace chaque nom par des initiales et un
+identifiant stable, puis vérifie qu'aucun nom complet ne subsiste et liste ce que tu as
+remplacé. » En formation les données sont fictives ; en réel, ce réflexe est la condition
+d'usage (et gardez la table de correspondance hors de Claude).

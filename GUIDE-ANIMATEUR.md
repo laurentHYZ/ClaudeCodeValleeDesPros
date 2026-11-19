@@ -29,6 +29,11 @@ n'avez pas à présenter les couches du pack — elles travaillent pour vous en 
 | Projet final (outil HTML) | leçon 9 | **RECOMMANDÉ** | Une démo de 10 min par vous suffit |
 | Mode guidé `/demarrer` | `.claude/commands/` de chaque dossier | **OPTIONNEL** | À annoncer comme devoir, pas à dérouler en salle |
 | Tournoi de prompts | fin de leçon 8 | **OPTIONNEL** | Seulement si ≥ 3 participants du même métier — sinon en plénière sur un seul dossier, ou pas du tout |
+| Question piège anti-invention (×12) | `CORRIGES-ANIMATEUR.md` + `/demarrer` | **CŒUR** | 5 min après l'exercice métier — la faire poser telle quelle, sans prévenir |
+| Mission finale « vendredi soir » (×12) | fin de chaque README | **AMBIANT** | Zéro — c'est votre soupape pour les rapides, ne pas présenter en plénière |
+| Preuve par vous-même (2ᵉ essai naïf + gain mesuré) | leçon 9 du tutoriel | **CŒUR** | 10 min en clôture — c'est ce qui remplace le « merci, c'était bien » |
+| Atelier éclair anonymisation RGPD | leçon 7 du tutoriel (+ bonus README 06 et 12) | **RECOMMANDÉ** | 5 min dans le créneau garde-fous |
+| Tâche planifiée « À vous » | leçon 6 du tutoriel | **RECOMMANDÉ** | 10 min — transforme la démo en pratique |
 | Contexte d'entreprise fictive | `CONTEXTE-ENTREPRISE.md` ×12 | **AMBIANT** | Zéro — ça nourrit Claude et les personnages, pas votre discours |
 | Docs Claude Code de référence | racine + `claude-code-docs/` | **ARCHIVE** | Pour vous, jamais pour les participants |
 | Session 2 — sur la route (mobile) | section `#s2` du tutoriel | **OPTIONNEL · SESSION SÉPARÉE** | Mini-session (~1h), à proposer après la Session 1, jamais à la place. Prérequis : appairage mobile testé en amont — voir plus bas |
@@ -69,10 +74,10 @@ métier en /compétence est le déclic qui fait durer la formation.
 | 1:40 (10 min) | Pause | |
 | 1:50 (20 min) | CLAUDE.md : chacun en crée un (avec la mention IA) | Leçon 5 |
 | 2:10 (50 min) | **Exercice métier** : essai naïf → prompt complet → 3 questions de réflexion → transformer son prompt en /compétence et lire le SKILL.md créé (leçon 6a) | Leçon 8 + leçon 6a |
-| 3:00 (10 min) | Débrief par le personnage : « demandez sa critique au [personnage de votre dossier] » | `.claude/agents/` |
+| 3:00 (10 min) | Débrief par le personnage : « demandez sa critique au [personnage de votre dossier] » — puis **la question piège** (chacun pose celle de son métier, voir corrigés) | `.claude/agents/` + corrigés |
 | 3:10 (20 min) | **Atelier connecteurs (hands-on)** : exercice A — un seul outil (interroger sa messagerie) → exercice B — deux outils dans une demande (messagerie → Drive → fichier de suivi). Chacun sur SA connexion ; ceux qui n'ont pas connecté font la version « par export ». | Leçon 7 |
-| 3:30 (10 min) | Garde-fous (modes de permission, vérification, RGPD) — puis, si le groupe est mûr, 2 min sur la 6c avec la liste sécurité, OU démo outil HTML | Leçons 7 / 9 / 6c |
-| 3:40 (10 min) | Clôture : devoirs = `/demarrer` chez soi + refaire sur ses propres fichiers | README des dossiers |
+| 3:30 (10 min) | Garde-fous (modes de permission, vérification, RGPD) + **atelier éclair anonymisation** (5 min) — puis, si le groupe est mûr, 2 min sur la 6c avec la liste sécurité, OU démo outil HTML | Leçons 7 / 9 / 6c |
+| 3:40 (10 min) | Clôture : **preuve par vous-même** (relancer l'essai naïf du matin + noter son gain mesuré dans le cahier d'invites), show-and-tell (3-4 volontaires, 2 min chacun), devoirs = `/demarrer` chez soi + refaire sur ses propres fichiers | Leçon 9 + README des dossiers |
 
 **L'atelier connecteurs en bref.** C'est le créneau pratique que les versions précédentes
 n'avaient pas — avant, les connecteurs n'étaient qu'une démo. Objectif : que chacun lance
@@ -88,9 +93,23 @@ exercice du dossier) et le débrief personnage de 5 min, ou en coupant la démo 
 créneau garde-fous. Ne sacrifiez pas l'atelier lui-même : c'est désormais le seul moment
 où les participants *utilisent* un connecteur de leurs mains.
 
+**Les ajouts tiennent dans les créneaux existants** — question piège (5'), anonymisation (5'),
+preuve par vous-même (5-7') et show-and-tell (5-8') remplacent du temps de parole animateur,
+pas du temps de pratique. Si ça déborde quand même, coupez dans cet ordre : show-and-tell →
+atelier anonymisation (renvoyez au mémo) → jamais la question piège ni la preuve par vous-même :
+ce sont les deux moments qui fixent la leçon la plus importante (vérifier) et la plus motivante
+(le gain mesuré).
+
+**Dictée vocale (2 min, optionnel, à glisser où vous voulez).** Beaucoup de dirigeants tapent
+lentement — montrez une fois la dictée du système (Windows : touche Win + H ; Mac : touche micro
+ou double-Ctrl) pour dicter un prompt entier. Ça lève un frein réel pour un tiers de la salle,
+et ça ne coûte rien.
+
 **Variante express (90 min)** : 0:00 gain (10') → démo dossier + 1 exercice universel (25')
 → cinq règles (15') → exercice métier essai naïf vs prompt complet (30') → garde-fous et
-devoirs (10'). On saute : CLAUDE.md en pratique (montrez-le seulement), personnage, leçons 6-7.
+devoirs (10'). On saute : CLAUDE.md en pratique (montrez-le seulement), personnage, leçons 6-7 —
+mais gardez la question piège (2 min, dans l'exercice métier) : c'est le meilleur rapport
+temps/leçon du pack.
 
 ## Check-list avant session
 
@@ -102,12 +121,27 @@ devoirs (10'). On saute : CLAUDE.md en pratique (montrez-le seulement), personna
    consacré à utiliser, pas à s'authentifier. Faites-le vous-même une fois pour pouvoir
    guider (l'écran d'autorisation diffère un peu entre Google et Microsoft).
 2. `fichiers-exercices/` déposé dans le drive ; chaque participant sait quel dossier prendre.
-3. Vous avez relu dans `CORRIGES-ANIMATEUR.md` les sections des métiers présents.
+3. Vous avez relu dans `CORRIGES-ANIMATEUR.md` les sections des métiers présents — y compris
+   la **question piège** de chacun (vous la ferez poser telle quelle, sans prévenir).
 4. Vous avez testé `/demarrer` et la critique du personnage sur UN dossier (10 min).
 5. Tutoriel ouvert dans un navigateur, prêt à projeter.
 6. **Cahier d'invites** créé (doc partagé Google/Word vierge, lien affiché en début de session) :
    chaque participant y colle ses meilleurs prompts au fil de la journée — il repart avec
-   le butin collectif du groupe.
+   le butin collectif du groupe. En clôture, chacun y ajoute ses deux chiffres
+   (gain estimé leçon 1 / gain mesuré leçon 9) : c'est votre matière pour la galerie avant/après.
+
+## Après la session — la boucle de rétention
+
+Trois gestes, dans l'ordre :
+
+1. **J+7 — `relance-J7.md`** : l'e-mail « refaites votre meilleur exercice sur vos vraies
+   données ». Une seule demande, une ligne de réponse attendue.
+2. **J+30 — `relance-J30.md`** : le défi « montrez une /compétence ou une tâche planifiée
+   utilisée en réel ce mois-ci ». C'est le test de l'ancrage, pas de la mémoire.
+3. **Galerie avant/après** : gardez les cahiers d'invites de chaque session. Pour vos sessions
+   suivantes, projetez en ouverture 3 paires réelles « essai naïf → prompt final » (anonymisées)
+   avec les gains mesurés du groupe précédent. Rien ne vend mieux la méthode que les chiffres
+   d'un autre dirigeant.
 
 ## E-mail de pré-travail (copier-coller)
 
@@ -199,12 +233,11 @@ Ne déposez dans le drive participants QUE le dossier `fichiers-exercices/` (ou 
   niveau. (Si le parent est ouvert, un /demarrer « panneau indicateur » le dit aussi.)
 - **Règle générale** : ne déboguez jamais plus de 3 minutes devant le groupe — binôme,
   pause, ou « on le règle ensemble à la pause », et la session continue.
-- **(Session 2) Appairage mobile qui échoue**
-- **(Session 3) Agent qui ne lit pas le bon dossier** : vérifiez que le dossier métier est ouvert au bon niveau dans Claude Code (même règle que pour /demarrer). Faites relancer après correction.
-- **(Session 3) Claude demande confirmation à chaque étape** : normal sur les premières exécutions en mode non-autonome — dites « Continue sans me demander » ou ajoutez « sans confirmation » dans le prompt de lancement.
- : aperçu de recherche, ça arrive — pas une
+- **(Session 2) Appairage mobile qui échoue** : aperçu de recherche, ça arrive — pas une
   erreur du participant. Binôme avec un voisin appairé (voir section Session 2 pour le
   mode de repli si une partie significative du groupe est touchée).
+- **(Session 3) Agent qui ne lit pas le bon dossier** : vérifiez que le dossier métier est ouvert au bon niveau dans Claude Code (même règle que pour /demarrer). Faites relancer après correction.
+- **(Session 3) Claude demande confirmation à chaque étape** : normal sur les premières exécutions en mode non-autonome — dites « Continue sans me demander » ou ajoutez « sans confirmation » dans le prompt de lancement.
 
 ## Ce que vous dites (et ne dites pas)
 

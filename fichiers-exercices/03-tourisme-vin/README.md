@@ -34,3 +34,10 @@ vous apprend (leçon 4 : les cinq règles).
 - À la fin d'un exercice, demandez la critique du personnage « Contrôleur de la régie / douanes »
   (sous-agent `controleur-regie`) : il relit votre production comme dans la vraie vie.
 - Le décor est posé dans `CONTEXTE-ENTREPRISE.md`.
+
+## Mission finale (si vous avez fini en avance)
+
+Il est vendredi 17 h 30. Samedi chargé et fin de mois en même temps : tout doit être prêt. En **une seule demande** à Claude,
+faites produire dans un dossier `preparation-weekend/` : le tableau de taxe de séjour prêt à déclarer (lignes incomplètes signalées), le contrôle registre/factures avant DRM, et les e-mails aux clients dont la fiche d'arrivée est incomplète.
+Critère de réussite : les trois livrables sont cohérents entre eux, chaque affirmation cite sa
+source, et vous avez vérifié au moins un chiffre de chaque livrable avant de « l'envoyer ».

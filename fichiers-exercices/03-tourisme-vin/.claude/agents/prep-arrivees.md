@@ -11,7 +11,7 @@ Lire le planning des réservations pour identifier les arrivées du lendemain. V
 ## Fichiers à lire
 
 - eservations.csv — planning complet des réservations
-- iches-arrivee/ — une fiche par réservation (PDF ou texte)
+- fiches-arrivee/ — une fiche par réservation (PDF ou texte)
 - CONTEXTE-ENTREPRISE.md — contexte établissement
 
 ## Format de sortie

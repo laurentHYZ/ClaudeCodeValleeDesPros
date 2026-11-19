@@ -10,7 +10,7 @@ Lire les variables de paie du mois (heures supplémentaires, absences, primes, e
 
 ## Fichiers à lire
 
-- ariables-*.csv ou équivalent — fichier de variables reçu du client
+- variables-*.csv ou équivalent — fichier de variables reçu du client
 - dossiers-salaries/ — dossiers d'embauche (contrat, DPAE, NIR, mutuelle)
 - historique/ — variables des mois précédents pour comparaison
 

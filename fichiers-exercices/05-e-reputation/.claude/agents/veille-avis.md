@@ -10,7 +10,7 @@ Lire les exports d'avis clients (Google, Tripadvisor, etc.), classifier chaque a
 
 ## Fichiers à lire
 
-- vis-*.csv — exports d'avis par plateforme et par période
+- avis-*.csv — exports d'avis par plateforme et par période
 - export-fiche-google.csv — note globale et volume
 - contrat-abonnement.pdf — SLA de réponse et objectif de note (à lire une fois)
 

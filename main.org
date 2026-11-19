@@ -1,0 +1,9 @@
+:PROPERTIES:
+:GPTEL_MODEL: deepseek-flash
+:GPTEL_BACKEND: DeepSeek
+:GPTEL_SYSTEM: You are a large language model living in Emacs and a helpful assistant. Respond concisely.
+:GPTEL_TOOLS: Bash Eval WebSearch WebFetch Diagnostics Mkdir Edit Insert Write Glob Read Grep TodoWrite Skill Agent
+:END:
+#+title: valleedesPros
+
+

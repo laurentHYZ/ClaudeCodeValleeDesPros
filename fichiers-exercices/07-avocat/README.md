@@ -30,3 +30,10 @@ vous apprend (leçon 4 : les cinq règles).
 - À la fin d'un exercice, demandez la critique du personnage « Associé senior du cabinet »
   (sous-agent `associe-senior`) : il relit votre production comme dans la vraie vie.
 - Le décor est posé dans `CONTEXTE-ENTREPRISE.md`.
+
+## Mission finale (si vous avez fini en avance)
+
+Il est vendredi 17 h 30. L'associé veut le point complet du dossier demain matin : tout doit être prêt. En **une seule demande** à Claude,
+faites produire dans un dossier `point-associe/` : la chronologie sourcée avec les trous documentaires signalés, l'analyse clause par clause du contrat, et les projets de notes d'honoraires du mois vérifiés.
+Critère de réussite : les trois livrables sont cohérents entre eux, chaque affirmation cite sa
+source, et vous avez vérifié au moins un chiffre de chaque livrable avant de « l'envoyer ».

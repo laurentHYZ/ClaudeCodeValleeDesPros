@@ -11,7 +11,7 @@ Parcourir les dossiers actifs, extraire toutes les dates d'échéance (délais d
 ## Fichiers à lire
 
 - dossiers/ — un sous-dossier par affaire, contenant chronologie et pièces
-- genda-echeances.csv ou équivalent — s'il existe
+- agenda-echeances.csv ou équivalent — s'il existe
 - contrats/ — pour les préavis contractuels
 
 ## Format de sortie

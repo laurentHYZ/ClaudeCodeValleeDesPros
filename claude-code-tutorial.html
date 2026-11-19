@@ -422,7 +422,10 @@
   <p>L'application peut lancer une demande selon un calendrier. Première tâche planifiée classique :</p>
   <div class="prompt">Tous les lundis à 8h, regarde les fichiers ajoutés à ce dossier pendant la semaine écoulée et rédige-moi un point d'une page : ce qui est arrivé, ce qui demande mon attention, et toutes les échéances mentionnées dans les documents.<button class="copy">Copier</button></div>
   <p>Les tâches planifiées depuis l'application tournent sur votre machine. Pour des automatisations qui tournent même ordinateur éteint, il existe les « Routines » dans le cloud — à explorer plus tard.</p>
+  <p><strong>À vous (10 min)</strong> — ne restez pas à la démo : transformez votre prompt métier (leçon 8) en tâche du lundi matin :</p>
+  <div class="prompt">Crée une tâche planifiée qui s'exécute chaque lundi à 8 h : [collez ici votre meilleur prompt de la leçon 8], et dépose le résultat dans un fichier point-lundi.md de ce dossier. Récapitule la tâche créée pour que je vérifie avant d'activer.<button class="copy">Copier</button></div>
   <label class="check"><input type="checkbox" data-step><span class="lbl sans">J'ai créé (ou au moins trouvé) les tâches planifiées dans l'application.</span></label>
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">J'ai transformé mon prompt métier en tâche planifiée du lundi matin.</span></label>
   <div class="quiz">
     <p class="q">Une /compétence (le fichier SKILL.md), c'est quoi au juste ?</p>
     <button class="opt" data-r="0">Du code que seul un développeur peut relire ou modifier</button>
@@ -440,7 +443,7 @@
   <h3>Les connecteurs</h3>
   <p>Claude Code peut se brancher sur les outils que vous utilisez déjà — Gmail/Outlook, Google Drive, Slack, agendas, CRM — via des connecteurs (nom technique : « MCP »). Jusqu'ici vous avez travaillé sur des fichiers déposés dans un dossier ; un connecteur laisse Claude aller chercher la matière directement dans votre messagerie ou votre Drive, et y ranger ce qu'il produit. Une fois deux outils connectés, une seule demande peut les traverser.</p>
 
-  <div class="callout tip"><strong>À connecter avant la session</strong>Cet atelier suppose que vous avez déjà autorisé <strong>une messagerie</strong> (Gmail ou Outlook) <em>et</em> <strong>un espace de fichiers</strong> (Google Drive ou OneDrive) — c'était le point&nbsp;4 de l'e-mail de préparation. L'autorisation se fait une fois, via le bouton <strong>+</strong> à côté de la zone de saisie&nbsp;: choisissez le connecteur, ouvrez votre compte, validez l'accès. Si vous ne l'avez pas fait, faites-le maintenant (2&nbsp;min) ou suivez la voie « sans connecteur » plus bas — personne ne reste bloqué.</p></div>
+  <div class="callout tip"><strong>À connecter avant la session</strong>Cet atelier suppose que vous avez déjà autorisé <strong>une messagerie</strong> (Gmail ou Outlook) <em>et</em> <strong>un espace de fichiers</strong> (Google Drive ou OneDrive) — c'était le point&nbsp;4 de l'e-mail de préparation. L'autorisation se fait une fois, via le bouton <strong>+</strong> à côté de la zone de saisie&nbsp;: choisissez le connecteur, ouvrez votre compte, validez l'accès. Si vous ne l'avez pas fait, faites-le maintenant (2&nbsp;min) ou suivez la voie « sans connecteur » plus bas — personne ne reste bloqué.</div>
 
   <h3>Atelier — 20 minutes, deux temps</h3>
   <p>L'idée&nbsp;: passer de « Claude lit un fichier » à « Claude va chercher l'information lui-même, puis la range ». On commence par un seul outil, puis on enchaîne deux outils dans une même demande.</p>
@@ -474,10 +477,17 @@
   <h3>Les règles de confiance</h3>
   <ul>
     <li><strong>Rien ne change sans votre validation</strong> en mode Demander — et vous pouvez refuser chaque modification individuellement.</li>
+    <li><strong>Après toute tâche qui écrit ou modifie des fichiers :</strong> demandez « liste-moi ce que tu as créé ou modifié ». Une phrase, et vous gardez la maîtrise de votre dossier.</li>
     <li><strong>Claude peut se tromper.</strong> Vérifiez les chiffres, les dates et les clauses juridiques par rapport à la source. C'est un assistant junior brillant, pas le professionnel responsable. Le responsable, c'est vous.</li>
     <li><strong>Secteur réglementé ?</strong> (paie, patrimoine, assurance, droit) Sur les offres Team et Enterprise, vos données ne servent pas à entraîner les modèles. Vérifiez les conditions d'utilisation des données de votre offre avant d'y faire passer des données clients confidentielles — et le RGPD s'applique : minimisez et anonymisez quand c'est possible.</li>
     <li><strong>Coût :</strong> votre abonnement inclut un usage généreux avec des limites qui se réinitialisent régulièrement. Le modèle par défaut convient à la plupart des travaux.</li>
   </ul>
+
+  <h3>Atelier éclair — anonymiser avant de confier (5 min)</h3>
+  <p>Le réflexe qui rend le RGPD praticable : avant de faire travailler Claude sur un fichier nominatif réel, faites-lui produire une copie anonymisée — et faites-lui vérifier son propre travail. Essayez sur un fichier de votre dossier d'exercices qui contient des noms :</p>
+  <div class="prompt">Crée une copie anonymisée de ce fichier : remplace chaque nom de personne par des initiales et un identifiant stable (même personne = même identifiant partout). Vérifie ensuite qu'aucun nom complet ne subsiste dans la copie, et liste ce que tu as remplacé.<button class="copy">Copier</button></div>
+  <p>En réel : travaillez sur la copie anonymisée, et gardez la table de correspondance hors de Claude. En formation, tout est fictif — mais le geste, lui, est le vrai.</p>
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">J'ai fait anonymiser un fichier par Claude et vérifié le résultat.</span></label>
   <div class="quiz">
     <p class="q">Vous voulez que Claude restructure l'archive complète de vos chantiers — des centaines de dossiers. Premier réflexe ?</p>
     <button class="opt" data-r="0">Mode acceptation automatique, c'est plus rapide</button>
@@ -537,7 +547,7 @@
       <div class="prompt">Voici les exports CSV du mois (Meta, LinkedIn, Brevo). Construis un rapport client : un tableau consolidé coût / clics / conversions par canal, puis une demi-page en langage simple sur ce qui a fonctionné et ce qu'on change le mois prochain. Format PDF prêt à envoyer, à notre charte (voir CLAUDE.md).<button class="copy">Copier</button></div>
     </div></details>
     <details class="exercise"><summary>3 · Veille concurrentielle structurée</summary><div class="body">
-      <div class="prompt">Voici des captures et pages enregistrées des communications de 4 concurrents. Construis une grille d'analyse : positionnement, messages clés, canaux, fréquence, ce qu'ils font que nous ne faisons pas. Termine par 3 recommandations argumentées.<button class="copy">Copier</button></div>
+      <div class="prompt">Voici mes notes de veille sur les concurrents (dossier veille/). Construis une grille d'analyse : positionnement, messages clés, canaux, fréquence, ce qu'ils font que nous ne faisons pas. Termine par 3 recommandations argumentées.<button class="copy">Copier</button></div>
     </div></details>
   </div>
 
@@ -579,7 +589,7 @@
       <div class="prompt">Voici l'export des avis du mois @avis-mai.csv. Rédige une réponse personnalisée pour chacun : remerciement spécifique (cite un détail de l'avis) pour les positifs, réponse posée et orientée solution pour les négatifs, jamais de formule copiée-collée deux fois. Pour les avis négatifs mettant en cause un fait précis, marque-les « À VALIDER » pour que je vérifie avant publication.<button class="copy">Copier</button></div>
     </div></details>
     <details class="exercise"><summary>2 · Détection d'avis suspects</summary><div class="body">
-      <div class="prompt">Analyse cet export d'avis et signale les profils suspects au sens DGCCRF : rafales d'avis le même jour, formulations quasi identiques, comptes sans historique, notes extrêmes sans texte. Construis un tableau de preuves (avec les captures du dossier en référence) que je peux transmettre au client ou à la plateforme.<button class="copy">Copier</button></div>
+      <div class="prompt">Analyse cet export d'avis et signale les profils suspects au sens DGCCRF : rafales d'avis le même jour, formulations quasi identiques, comptes sans historique, notes extrêmes sans texte. Construis un tableau de preuves (avec, pour chaque avis suspect, sa date, son auteur et sa formulation en référence) que je peux transmettre au client ou à la plateforme.<button class="copy">Copier</button></div>
     </div></details>
     <details class="exercise"><summary>3 · Rapport client mensuel</summary><div class="body">
       <div class="prompt">À partir de @avis-mai.csv, construis le rapport mensuel du client : note moyenne et évolution, volume d'avis, thèmes récurrents (positifs et négatifs) avec citations, délai moyen de réponse. Une page, graphiques simples, langage non technique. Ce rapport doit donner envie de renouveler l'abonnement.<button class="copy">Copier</button></div>
@@ -636,13 +646,13 @@
     <p class="context">Tournées, contrôles d'étanchéité, traçabilité fluides, contrats de maintenance. Vos exports Praxedo/Organilog et vos CERFA sont la matière première.</p>
     <div class="callout warn"><strong>Essai naïf d'abord</strong>Avant l'exercice 1, lancez tel quel : <em>« Vérifie les fluides. »</em> Observez : croise-t-il les bons avec les CERFA ? Calcule-t-il les prochains contrôles obligatoires ? Puis lancez le prompt complet et comparez.</div>
     <details class="exercise"><summary>1 · Contrôle de la traçabilité fluides</summary><div class="body">
-      <div class="prompt">Voici les bons d'intervention du trimestre et les CERFA 15497 du dossier. Croise les deux : chaque intervention avec manipulation de fluide a-t-elle son CERFA ? Construis le tableau de suivi : équipement, fluide, quantités chargées/récupérées, date du dernier contrôle d'étanchéité et date du prochain contrôle obligatoire. Signale les manquants — c'est ce qu'on me demande en cas de contrôle.<button class="copy">Copier</button></div>
+      <div class="prompt">Voici les bons d'intervention du mois et les CERFA 15497 du dossier. Croise les deux : chaque intervention avec manipulation de fluide a-t-elle son CERFA ? Construis le tableau de suivi : équipement, fluide, quantités chargées/récupérées, date du dernier contrôle d'étanchéité et date du prochain contrôle obligatoire. Signale les manquants — c'est ce qu'on me demande en cas de contrôle.<button class="copy">Copier</button></div>
     </div></details>
     <details class="exercise"><summary>2 · Relance des contrats de maintenance</summary><div class="body">
-      <div class="prompt">Voici la liste des contrats de maintenance @contrats.xlsx et les bons d'intervention de l'année. Identifie : les contrats dont les visites prévues n'ont pas toutes été faites, les contrats arrivant à échéance dans les 60 jours, et les clients en dépannage répété qui n'ont PAS de contrat (à démarcher). Rédige un courrier de proposition de contrat pour ces derniers.<button class="copy">Copier</button></div>
+      <div class="prompt">Voici la liste des contrats de maintenance @contrats.xlsx, les bons d'intervention du dossier et @depannages-sans-contrat.csv. Identifie : les contrats dont les visites prévues n'ont pas toutes été faites, les contrats arrivant à échéance dans les 60 jours, et les clients en dépannage répété qui n'ont PAS de contrat (à démarcher). Rédige un courrier de proposition de contrat pour ces derniers.<button class="copy">Copier</button></div>
     </div></details>
     <details class="exercise"><summary>3 · Devis dépannage standardisés</summary><div class="body">
-      <div class="prompt">Voici 5 de mes derniers devis de dépannage. Crée un modèle de devis type (déplacement, main-d'œuvre, pièces, fluide au kg avec traçabilité mentionnée, TVA selon le cas) puis une compétence /devis-depannage qui me pose les questions clés (client, panne, équipement) et génère le devis au modèle.<button class="copy">Copier</button></div>
+      <div class="prompt">Voici mes derniers bons d'intervention (dossier bons-intervention/). En t'en servant comme matière, crée un modèle de devis de dépannage type (déplacement, main-d'œuvre, pièces, fluide au kg avec traçabilité mentionnée, TVA selon le cas) puis une compétence /devis-depannage qui me pose les questions clés (client, panne, équipement) et génère le devis au modèle.<button class="copy">Copier</button></div>
     </div></details>
   </div>
 
@@ -697,6 +707,8 @@
   2. Comment avez-vous vérifié le résultat ? (un total recalculé, une pièce ouverte au hasard, une date recoupée)<br>
   3. Que changeriez-vous dans votre prompt la prochaine fois — et mérite-t-il de devenir une /compétence ?</div>
 
+  <p><strong>Fini en avance ?</strong> Le README de votre dossier se termine par une « Mission finale » : les trois exercices combinés en une seule demande, comme un vendredi soir de vraie semaine. Enchaînez dessus en autonomie.</p>
+
   <h3>Exercice de groupe — le tournoi de prompts (20-30 min)</h3>
   <p>À faire à plusieurs, sur la <strong>même tâche</strong> avec les <strong>mêmes fichiers</strong> (prenez l'exercice 1 de votre onglet). Trois participants, trois approches :</p>
   <table>
@@ -726,6 +738,14 @@
   <div class="prompt">Je veux un calculateur de devis en une seule page HTML que j'ouvre dans mon navigateur. Avant de construire quoi que ce soit, interroge-moi : pose-moi tes questions une par une (entrées du calcul, règles de prix, cas particuliers, présentation), propose-moi des options quand c'est possible, et résume la spécification pour validation. Construis seulement après mon accord, avec le nom de mon entreprise en haut, puis ouvre le résultat pour que je l'essaie.<button class="copy">Copier</button></div>
   <p>Itérez comme avec une personne : <em>« agrandis le résultat », « ajoute une majoration urgence de 10 % », « permets de télécharger le devis en PDF ».</em></p>
   <label class="check"><input type="checkbox" data-step><span class="lbl sans">J'ai construit un petit outil pour mon entreprise.</span></label>
+
+  <h3>La preuve par vous-même (10 min, en fin de session)</h3>
+  <p>Deux mesures avant de partir — elles prennent dix minutes et valent tout le reste :</p>
+  <ul>
+    <li><strong>Relancez l'essai naïf du matin</strong>, tel quel, mot pour mot. Comparez avec ce que vous produisez maintenant avec votre prompt complet. La différence, c'est vous qui avez progressé — pas Claude.</li>
+    <li><strong>Rechronométrez.</strong> À la leçon 1, vous avez chiffré le temps que votre tâche vous coûte à la main. Refaites-la maintenant avec votre prompt final et notez le temps réel. Inscrivez les deux chiffres (estimé / mesuré) dans le cahier d'invites du groupe : c'est votre gain, mesuré, pas promis.</li>
+  </ul>
+  <label class="check"><input type="checkbox" data-step><span class="lbl sans">J'ai comparé mon essai naïf du matin à ma production finale, et noté mon gain mesuré.</span></label>
 
   <h3>Et maintenant ?</h3>
   <ul>

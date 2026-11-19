@@ -71,14 +71,14 @@ modèle de départ pour les exercices A, B et C de la session 3 :
 | 02-communication | suivi-livrables | Livrables en retard, état avancement hebdo |
 | 03-tourisme-vin | prep-arrivees | Arrivées lendemain, points de vigilance |
 | 04-renovation | suivi-chantiers | Devis vs factures, tableau de bord chantier |
-| 05-e-reputation | eille-avis | Classe avis, propose réponses, signale crises |
+| 05-e-reputation | veille-avis | Classe avis, propose réponses, signale crises |
 | 06-patrimoine | prep-rendez-vous | Fiche synthèse avant RDV client |
-| 07-avocat | eille-echeances | Délais légaux 30/60 jours, alerte hebdo |
-| 08-assurance | elances-echeances | Contrats expirant 60 j, brouillons renouvellement |
+| 07-avocat | veille-echeances | Délais légaux 30/60 jours, alerte hebdo |
+| 08-assurance | relances-echeances | Contrats expirant 60 j, brouillons renouvellement |
 | 09-froid-clim | planning-maintenance | Dates maintenance préventive, fiches intervention |
 | 10-solaire | suivi-production | Réel vs prévisionnel, écarts >10%, rapport mensuel |
-| 11-admin-externalise | 	ri-entrants | Tri docs par client/priorité, dates clés, to-do |
-| 12-paie | alidation-variables | Variables reçues, anomalies, rapport contrôle |
+| 11-admin-externalise | tri-entrants | Tri docs par client/priorité, dates clés, to-do |
+| 12-paie | validation-variables | Variables reçues, anomalies, rapport contrôle |
 
 Les participants testent l'agent avec /agent:nom-de-l-agent puis le personnalisent
 pour correspondre à leur propre activité (exercices A, B, C du tutoriel — session 3).

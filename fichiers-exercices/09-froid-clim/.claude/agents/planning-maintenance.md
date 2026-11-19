@@ -11,7 +11,7 @@ Lire les contrats de maintenance et les bons d'intervention, identifier les site
 ## Fichiers à lire
 
 - contrats-maintenance.csv — clients, équipements, périodicité, dernière visite
-- ons-intervention/ — BI de toutes les interventions passées
+- bons-intervention/ — BI de toutes les interventions passées
 - clients.csv — coordonnées et accès sites
 
 ## Format de sortie

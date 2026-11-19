@@ -30,3 +30,10 @@ vous apprend (leçon 4 : les cinq règles).
 - À la fin d'un exercice, demandez la critique du personnage « Gérant de la menuiserie Bois & Formes »
   (sous-agent `client-menuisier`) : il relit votre production comme dans la vraie vie.
 - Le décor est posé dans `CONTEXTE-ENTREPRISE.md`.
+
+## Mission finale (si vous avez fini en avance)
+
+Il est vendredi 17 h 30. Le gérant de la menuiserie vient signer lundi : tout doit être prêt. En **une seule demande** à Claude,
+faites produire dans un dossier `dossier-signature/` : le comparatif final avec recommandation motivée et sourcée, l'échéancier des renouvellements à 90 jours, et le dossier sinistre prêt à déclarer avec les pièces manquantes listées.
+Critère de réussite : les trois livrables sont cohérents entre eux, chaque affirmation cite sa
+source, et vous avez vérifié au moins un chiffre de chaque livrable avant de « l'envoyer ».

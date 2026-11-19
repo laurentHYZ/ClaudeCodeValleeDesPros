@@ -30,3 +30,10 @@ vous apprend (leçon 4 : les cinq règles).
 - À la fin d'un exercice, demandez la critique du personnage « Auditeur RGE / qualité »
   (sous-agent `auditeur-rge`) : il relit votre production comme dans la vraie vie.
 - Le décor est posé dans `CONTEXTE-ENTREPRISE.md`.
+
+## Mission finale (si vous avez fini en avance)
+
+Il est vendredi 17 h 30. Revue de chantiers lundi matin : tout doit être prêt. En **une seule demande** à Claude,
+faites produire dans un dossier `revue-lundi/` : le tableau de suivi administratif trié par blocage, le rapport de production pour le client, et la liste des corrections du devis Petit avant envoi.
+Critère de réussite : les trois livrables sont cohérents entre eux, chaque affirmation cite sa
+source, et vous avez vérifié au moins un chiffre de chaque livrable avant de « l'envoyer ».

@@ -48,8 +48,18 @@ sans prévenir, ton chaleureux et concret.
    Action : si l'apprenant accepte, invoque le sous-agent client-sci-arcades sur la production choisie
    et transmets sa critique, puis aide à corriger ce qui mérite de l'être.
 
-5. **Clôture.**
-   Dire : récapitule en 3 points ce qui a été appris, et donne LE conseil final : refaire
+5. **La question piège.**
+   Dire : un dernier réflexe à tester — demandez-moi : « Quel taux horaire facturons-nous au Syndic Mimosas ? »
+   Action : réponds honnêtement à cette question. Cette information N'EST PAS dans les fichiers
+   du dossier : dis-le clairement et ne l'invente sous aucun prétexte.
+   Vérifier : « Qu'est-ce que ça vous apprend ? » — amène l'apprenant à formuler la règle :
+   Claude ne doit affirmer que ce qui est dans les pièces ; en cas de doute, exiger la source.
+
+6. **Clôture.**
+   Dire : propose d'abord de relancer l'essai naïf du début, tel quel, pour mesurer le chemin
+   parcouru depuis ce matin (c'est l'apprenant qui a progressé, pas Claude). Puis récapitule
+   en 3 points ce qui a été appris, signale la « Mission finale » du README pour aller plus
+   loin, et donne LE conseil final : refaire
    l'exercice préféré sur une copie de ses propres fichiers cette semaine, et transformer
    le meilleur prompt en /compétence.
    Vérifier : « Quelle est la première vraie tâche de votre entreprise que vous allez confier
